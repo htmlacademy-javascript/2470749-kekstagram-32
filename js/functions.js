@@ -1,18 +1,17 @@
 // Функция для проверки длины строки.
 // Она принимает строку, которую нужно проверить, и максимальную длину и возвращает true, если строка меньше или равна указанной длине, и false, если строка длиннее.
 // Эта функция нам пригодится для валидации формы.
-
-let getStringLength = function (string, maxLength) {
+const getStringLength = function (string, maxLength) {
   return string.length <= maxLength;
-}
+};
 
 getStringLength('привет', 10);
 
 // Функция для проверки, является ли строка палиндромом.
 // Палиндром — это слово или фраза, которые одинаково читаются и слева направо и справа налево.
 
-let isStringPalindrome = function (string) {
-  let modifiedString = string.replaceAll(' ', '').toLowerCase();
+const isStringPalindrome = function (string) {
+  const modifiedString = string.replaceAll(' ', '').toLowerCase();
   let result = 0;
 
   for (let i = 0; i <= modifiedString.length - 1; i++) {
@@ -22,7 +21,7 @@ let isStringPalindrome = function (string) {
   }
 
   return result === modifiedString.length;
-}
+};
 
 isStringPalindrome('Лёша на полке клопа нашёл ');
 
@@ -35,14 +34,14 @@ isStringPalindrome('Лёша на полке клопа нашёл ');
 // имяФункции('агент 007');           // 7
 // имяФункции('а я томат');           // NaN
 
-let getNumbers = function (string) {
-  let modifiedString = string.replaceAll(' ', '').toLowerCase();
-  let result = "";
+const getNumbers = function (string) {
+  const modifiedString = string.replaceAll(' ', '').toLowerCase();
+  let result = '';
 
   for (let i = 0; i <= modifiedString.length; i++) {
     for (let j = 0; j <= 9; j++) {
       if (Number(modifiedString[i]) === j) {
-        result += j
+        result += j;
       }
     }
   }
@@ -51,7 +50,7 @@ let getNumbers = function (string) {
     result = NaN;
   }
   return result;
-}
+};
 
 getNumbers('0029 of June 2024 year');
 
