@@ -3,11 +3,8 @@
 // Структура каждого объекта должна быть следующей:
 
 // id, число — идентификатор опубликованной фотографии. Это число от 1 до 25. Идентификаторы не должны повторяться.
-
 // url, строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
-
 // description, строка — описание фотографии. Описание придумайте самостоятельно.
-
 // likes, число — количество лайков, поставленных фотографии. Случайное число от 15 до 200.
 
 // comments, массив объектов — список комментариев, оставленных другими пользователями к этой фотографии.
@@ -22,11 +19,8 @@
 // }
 
 // У каждого комментария есть идентификатор — id — любое число. Идентификаторы не должны повторяться.
-
 // Поле avatar — это строка, значение которой формируется по правилу img/avatar-{{случайное число от 1 до 6}}.svg. Аватарки подготовлены в директории img.
-
 // Для формирования текста комментария — message — вам необходимо взять одно или два случайных предложения из представленных ниже:
-
 // Имена авторов также должны быть случайными. Набор имён для комментаторов составьте сами. Подставляйте случайное имя в поле name.
 
 const DESCRIPTION = [
@@ -104,26 +98,25 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-// функция, которая создает массив из рандомных чисел (задается количество чисел которое нужно получить) таким образом, чтобы эти числа не повторялись в массиве
-const makeRandomIntegerArray = (quantity) => {
-  const array = [getRandomInteger(1, quantity)];
+// функция, которая создает массив из рандомных чисел таким образом, чтобы эти числа не повторялись в массиве
+const makeRandomIntegerArray = (min, max) => {
+  const array = [getRandomInteger(min, max)];
+  let newElement = getRandomInteger(min, max);
 
-  for (let i = 0; i <= quantity; i++) {
-    let newElement = getRandomInteger(1, quantity);
+  for (let i = 0; i <= max; i++) {
     array.forEach((value) => {
       if (value === newElement) {
-        newElement = getRandomInteger(1, quantity);
+        newElement = getRandomInteger(min, max);
       }
     });
     array.push(newElement);
   }
-
   return array;
 };
 
-const photosIdArray = makeRandomIntegerArray(LOADED_PHOTOS_COUNT);
-const photosUrlArray = makeRandomIntegerArray(LOADED_PHOTOS_COUNT);
-const commentsIdArray = makeRandomIntegerArray(750);
+const photosIdArray = makeRandomIntegerArray(1, LOADED_PHOTOS_COUNT);
+const photosUrlArray = makeRandomIntegerArray(1, LOADED_PHOTOS_COUNT);
+const commentsIdArray = makeRandomIntegerArray(0, 750);
 
 // функция, которая выбирает случайный элемент из массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
