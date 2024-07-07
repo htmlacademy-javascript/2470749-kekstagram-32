@@ -116,10 +116,21 @@ const makeRandomIntegerArray = (min, max) => {
 
 const photosIdArray = makeRandomIntegerArray(1, LOADED_PHOTOS_COUNT);
 const photosUrlArray = makeRandomIntegerArray(1, LOADED_PHOTOS_COUNT);
-const commentsIdArray = makeRandomIntegerArray(0, 750);
 
 // функция, которая выбирает случайный элемент из массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+
+// функция генерирует ID с учетом других ID чтобы они не повторялись (замыкание)
+const createGenerator = () => {
+  let numberId = 1;
+
+  return () => {
+    numberId += 1;
+    return numberId;
+  }
+}
+
+const generateRandomId = createGenerator();
 
 // функция генерирует комментарий из одного или двух предложений из списка MESSAGE
 const createRandomCommentMessage = (quantity) => {
@@ -135,7 +146,7 @@ const createRandomCommentMessage = (quantity) => {
 
 // функция, которая создает объект с информации об одном комментарии (задается порядковый номер комментария)
 const getLoadedPhotoComment = (number) => ({
-  id: commentsIdArray[number],
+  id: generateRandomId(),
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message: createRandomCommentMessage(getRandomInteger(1, 2)),
   name: getRandomArrayElement(NAMES),
