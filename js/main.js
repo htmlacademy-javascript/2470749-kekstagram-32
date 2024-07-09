@@ -23,7 +23,7 @@
 // Для формирования текста комментария — message — вам необходимо взять одно или два случайных предложения из представленных ниже:
 // Имена авторов также должны быть случайными. Набор имён для комментаторов составьте сами. Подставляйте случайное имя в поле name.
 
-const DESCRIPTION = [
+const DESCRIPTIONS = [
   'Всем привет! Давно меня здесь не было. Вот новая фоточка :)',
   'Красота!',
   'Закаты летом шикарные!',
@@ -79,7 +79,7 @@ const NAMES = [
   'Никита'
 ];
 
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -99,7 +99,7 @@ const getRandomInteger = (a, b) => {
 };
 
 // функция, которая создает массив из рандомных чисел таким образом, чтобы эти числа не повторялись в массиве
-const makeRandomIntegerArray = (min, max) => {
+const getRandomIntegerArray = (min, max) => {
   const array = [getRandomInteger(min, max)];
   let newElement = getRandomInteger(min, max);
 
@@ -114,8 +114,8 @@ const makeRandomIntegerArray = (min, max) => {
   return array;
 };
 
-const photosIdArray = makeRandomIntegerArray(1, LOADED_PHOTOS_COUNT);
-const photosUrlArray = makeRandomIntegerArray(1, LOADED_PHOTOS_COUNT);
+const photosIdArray = getRandomIntegerArray(1, LOADED_PHOTOS_COUNT);
+const photosUrlArray = getRandomIntegerArray(1, LOADED_PHOTOS_COUNT);
 
 // функция, которая выбирает случайный элемент из массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
@@ -134,11 +134,11 @@ const generateRandomId = createGenerator();
 
 // функция генерирует комментарий из одного или двух предложений из списка MESSAGE
 const createRandomCommentMessage = (quantity) => {
-  const messageArray = [getRandomArrayElement(MESSAGE)];
-  let newElement = getRandomArrayElement(MESSAGE);
+  const messageArray = [getRandomArrayElement(MESSAGES)];
+  let newElement = getRandomArrayElement(MESSAGES);
 
   for (let i = 1; i < quantity; i++) {
-    messageArray[i] !== newElement ? messageArray.push(newElement) : newElement = getRandomArrayElement(MESSAGE);
+    messageArray[i] !== newElement ? messageArray.push(newElement) : newElement = getRandomArrayElement(MESSAGES);
   }
 
   return messageArray.join(' ');
@@ -152,7 +152,7 @@ const getLoadedPhotoComment = (number) => ({
   name: getRandomArrayElement(NAMES),
 });
 
-const makeLoadedPhotoCommentsArray = (quantity) => {
+const getLoadedPhotoCommentsArray = (quantity) => {
   const array = [];
   for (let i = 0; i < quantity; i++) {
     array.push(getLoadedPhotoComment(i));
@@ -165,9 +165,9 @@ const makeLoadedPhotoCommentsArray = (quantity) => {
 const getLoadedPhotoData = (number) => ({
   id: photosIdArray[number],
   url: `photos/${photosUrlArray[number]}.jpg`,
-  description: getRandomArrayElement(DESCRIPTION),
+  description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(15, 200),
-  comments: makeLoadedPhotoCommentsArray(getRandomInteger(0, 30)),
+  comments: getLoadedPhotoCommentsArray(getRandomInteger(0, 30)),
 });
 
 // функция, которой задаешь количество фото и она формирует массив данных об этих фотографий с помощью функции getLoadedPhotoData
