@@ -1,3 +1,3 @@
-import { getPhotosDataArray, LOADED_PHOTOS_COUNT } from './get-photos-array.js';
+import { getPhotosDataArray, LOADED_PHOTOS_COUNT } from './data.js';
 
-getPhotosDataArray(LOADED_PHOTOS_COUNT);
+console.log(getPhotosDataArray(LOADED_PHOTOS_COUNT));
