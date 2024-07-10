@@ -1,6 +1,12 @@
 import { getRandomInteger, getRandomIntegerArray, getRandomArrayElement } from './util.js';
 
 // Функуция, которая гененирует массив с информацией о загруженных фотографиях
+const AVATARS_COUNT = 6;
+const LIKES_MIN_COUNT = 15;
+const LIKES_MAX_COUNT = 200;
+const COMMENTS_COUNT = 20;
+const LOADED_PHOTOS_COUNT = 25;
+
 
 const DESCRIPTIONS = [
   'Всем привет! Давно меня здесь не было. Вот новая фоточка :)',
@@ -67,8 +73,6 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-const LOADED_PHOTOS_COUNT = 25;
-
 // функция генерирует ID с учетом других ID чтобы они не повторялись (замыкание)
 const createGenerator = () => {
   let numberId = 1;
@@ -96,7 +100,7 @@ const createRandomCommentMessage = (quantity) => {
 // функция, которая создает объект с информации об одном комментарии (задается порядковый номер комментария)
 const getPhotoComment = () => ({
   id: generateRandomId(),
-  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(1, AVATARS_COUNT)}.svg`,
   message: createRandomCommentMessage(getRandomInteger(1, 2)),
   name: getRandomArrayElement(NAMES),
 });
@@ -110,8 +114,8 @@ const getPhotoData = (number) => ({
   id: photosIdArray[number],
   url: `photos/${photosUrlArray[number]}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInteger(15, 200),
-  comments: Array.from({length: getRandomInteger(0,30)}, getPhotoComment),
+  likes: getRandomInteger(LIKES_MIN_COUNT, LIKES_MAX_COUNT),
+  comments: Array.from({length: getRandomInteger(0, COMMENTS_COUNT)}, getPhotoComment),
 });
 
 // функция, которой задаешь количество фото и она формирует массив данных об этих фотографий с помощью функции getLoadedPhotoData
