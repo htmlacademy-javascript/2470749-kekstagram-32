@@ -25,4 +25,14 @@ const getRandomIntegerArray = (min, max) => {
 // функция, которая выбирает случайный элемент из массива
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-export { getRandomInteger, getRandomIntegerArray, getRandomArrayElement };
+// функция генерирует ID с учетом других ID чтобы они не повторялись (замыкание)
+const createGenerator = () => {
+  let numberId = 1;
+
+  return () => {
+    numberId += 1;
+    return numberId;
+  };
+};
+
+export { getRandomInteger, getRandomIntegerArray, getRandomArrayElement, createGenerator };

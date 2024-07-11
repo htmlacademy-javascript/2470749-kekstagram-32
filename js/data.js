@@ -1,4 +1,4 @@
-import { getRandomInteger, getRandomIntegerArray, getRandomArrayElement } from './util.js';
+import { getRandomInteger, getRandomIntegerArray, getRandomArrayElement, createGenerator } from './util.js';
 
 // Функуция, которая гененирует массив с информацией о загруженных фотографиях
 const AVATARS_COUNT = 6;
@@ -72,16 +72,6 @@ const MESSAGES = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
-
-// функция генерирует ID с учетом других ID чтобы они не повторялись (замыкание)
-const createGenerator = () => {
-  let numberId = 1;
-
-  return () => {
-    numberId += 1;
-    return numberId;
-  };
-};
 
 const generateRandomId = createGenerator();
 
