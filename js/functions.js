@@ -72,25 +72,28 @@ getNumbers('0029 of June 2024 year');
 
 const isMeetingOnWorkingDay = (startWork, endWork, startMeeting, meetingLength) => {
   const getModifiedTime = (time) => {
-    let array = time.split(':');
-    let modifiedTime = Number(array.join('.'));
+    const array = time.split(':');
+    const modifiedTime = Number(array.join('.'));
     return modifiedTime;
-  }
+  };
 
   const convertMinutesInHours = (minutes) => {
-    let array = [Math.floor(minutes / 60), minutes - Math.floor(minutes / 60) * 60];
-    let timeInHours = Number(array.join('.'));
+    const array = [Math.floor(minutes / 60), minutes - Math.floor(minutes / 60) * 60];
+    const timeInHours = Number(array.join('.'));
     return timeInHours;
-  }
+  };
 
-  let startWorkModified = getModifiedTime(startWork);
-  let endWorkModified = getModifiedTime(endWork);
-  let endOfMeeting = getModifiedTime(startMeeting) + convertMinutesInHours(meetingLength);
+  const startWorkModified = getModifiedTime(startWork);
+  const endWorkModified = getModifiedTime(endWork);
+  const endOfMeeting = getModifiedTime(startMeeting) + convertMinutesInHours(meetingLength);
   let result;
 
-  endOfMeeting - startWorkModified >= 0 && endWorkModified - endOfMeeting >= 0 ? result = true : result = false;
-
+  if (endOfMeeting - startWorkModified >= 0 && endWorkModified - endOfMeeting >= 0) {
+    result = true;
+  } else {
+    result = false;
+  }
   return result;
 };
 
-isMeetingOnWorkingDay('8:0', '10:0', '8:0', 120);
+isMeetingOnWorkingDay('08:00', '14:30', '14:00', 90);
