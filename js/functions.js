@@ -52,8 +52,45 @@ const getNumbers = function (string) {
 
 getNumbers('0029 of June 2024 year');
 
-// Если хотите усложнить задание, предусмотрите случай, когда вместо строки приходит число. Обратите внимание, что возвращать функция по-прежнему должна только целые положительные числа:
+/*
+Напишите функцию, которая принимает время начала и конца рабочего дня, а также время старта и продолжительность встречи в минутах и возвращает true, если встреча не выходит за рамки рабочего дня, и false, если выходит.
+Время указывается в виде строки в формате часы:минуты. Для указания часов и минут могут использоваться как две цифры, так и одна. Например, 8 часов 5 минут могут быть указаны по-разному: 08:05, 8:5, 08:5 или 8:05.
+Продолжительность задаётся числом. Гарантируется, что и рабочий день, и встреча укладываются в одни календарные сутки.
 
-// имяФункции(2023); // 2023
-// имяФункции(-1);   // 1
-// имяФункции(1.5);  // 15
+'8:00' - начало рабочего дня
+'17:30' - конец рабочего дня
+'14:00' - начало встречи
+90 - продолжительность встречи в минутах
+*/
+/*
+имяФункции('08:00', '17:30', '14:00', 90); // true
+имяФункции('8:0', '10:0', '8:0', 120);     // true
+имяФункции('08:00', '14:30', '14:00', 90); // false
+имяФункции('14:00', '17:30', '08:0', 90);  // false
+имяФункции('8:00', '17:30', '08:00', 900); // false
+*/
+
+const isMeetingOnWorkingDay = (startWork, endWork, startMeeting, meetingLength) => {
+  const getModifiedTime = (time) => {
+    let array = time.split(':');
+    let modifiedTime = Number(array.join('.'));
+    return modifiedTime;
+  }
+
+  const convertMinutesInHours = (minutes) => {
+    let array = [Math.floor(minutes / 60), minutes - Math.floor(minutes / 60) * 60];
+    let timeInHours = Number(array.join('.'));
+    return timeInHours;
+  }
+
+  let startWorkModified = getModifiedTime(startWork);
+  let endWorkModified = getModifiedTime(endWork);
+  let endOfMeeting = getModifiedTime(startMeeting) + convertMinutesInHours(meetingLength);
+  let result;
+
+  endOfMeeting - startWorkModified >= 0 && endWorkModified - endOfMeeting >= 0 ? result = true : result = false;
+
+  return result;
+};
+
+isMeetingOnWorkingDay('8:0', '10:0', '8:0', 120);
