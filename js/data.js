@@ -1,12 +1,10 @@
 import { getRandomInteger, getRandomIntegerArray, getRandomArrayElement, createGenerator } from './util.js';
 
-// Функуция, которая гененирует массив с информацией о загруженных фотографиях
 const AVATARS_COUNT = 6;
 const LIKES_MIN_COUNT = 15;
 const LIKES_MAX_COUNT = 200;
 const COMMENTS_COUNT = 20;
 const LOADED_PHOTOS_COUNT = 25;
-
 
 const DESCRIPTIONS = [
   'Всем привет! Давно меня здесь не было. Вот новая фоточка :)',
@@ -81,7 +79,11 @@ const createRandomCommentMessage = (quantity) => {
   let newElement = getRandomArrayElement(MESSAGES);
 
   for (let i = 1; i < quantity; i++) {
-    messageArray[i] !== newElement ? messageArray.push(newElement) : newElement = getRandomArrayElement(MESSAGES);
+    if (messageArray[i] !== newElement) {
+      messageArray.push(newElement);
+    } else {
+      newElement = getRandomArrayElement(MESSAGES);
+    }
   }
 
   return messageArray.join(' ');
