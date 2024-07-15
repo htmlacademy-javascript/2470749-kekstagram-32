@@ -52,8 +52,33 @@ const getNumbers = function (string) {
 
 getNumbers('0029 of June 2024 year');
 
-// Если хотите усложнить задание, предусмотрите случай, когда вместо строки приходит число. Обратите внимание, что возвращать функция по-прежнему должна только целые положительные числа:
+// функция, которая модифицирует время в число, напр 8:30 = 8.3
+const getModifiedTime = (time) => {
+  const array = time.split(':');
+  const modifiedTime = Number(array.join('.'));
+  return modifiedTime;
+};
 
-// имяФункции(2023); // 2023
-// имяФункции(-1);   // 1
-// имяФункции(1.5);  // 15
+// функция, которая переводит минуты в часы, напр 100 минут = 1.4
+const convertMinutesInHours = (minutes) => {
+  const timeInHours = Number(`${Math.floor(minutes / 60)}.${Math.floor(minutes % 60)}`);
+  return timeInHours;
+};
+
+/*
+функция, которая принимает время начала и конца рабочего дня, а также время старта и продолжительность встречи в минутах и возвращает true, если встреча не выходит за рамки рабочего дня, и false, если выходит.
+для проверки:
+имяФункции('08:00', '17:30', '14:00', 90); // true
+имяФункции('8:00', '17:30', '08:00', 900); // false
+*/
+const isMeetingOnWorkingDay = (startWork, endWork, startMeeting, meetingLength) => {
+  const startWorkModified = getModifiedTime(startWork);
+  const endWorkModified = getModifiedTime(endWork);
+  const endOfMeeting = getModifiedTime(startMeeting) + convertMinutesInHours(meetingLength);
+
+  let result = endOfMeeting - startWorkModified >= 0 && endWorkModified - endOfMeeting >= 0;
+
+  return result;
+};
+
+isMeetingOnWorkingDay('08:00', '17:30', '14:00', 90);
