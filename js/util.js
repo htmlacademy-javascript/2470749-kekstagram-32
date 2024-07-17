@@ -8,18 +8,18 @@ const getRandomInteger = (a, b) => {
 
 // функция, которая создает массив из рандомных чисел таким образом, чтобы эти числа не повторялись в массиве
 const getRandomIntegerArray = (min, max) => {
-  const array = [getRandomInteger(min, max)];
-  let newElement = getRandomInteger(min, max);
+  const randomIntegerArray = [];
 
-  for (let i = 0; i <= max; i++) {
-    array.forEach((value) => {
-      if (value === newElement) {
-        newElement = getRandomInteger(min, max);
-      }
+  for (let i = 0; i < max; i++) {
+    let newElement = getRandomInteger(min, max);
+    randomIntegerArray.forEach(element => {
+      if (element === newElement) {
+          newElement = getRandomInteger(min, max);
+        }
     });
-    array.push(newElement);
-  }
-  return array;
+    randomIntegerArray.push(newElement);
+    }
+  return randomIntegerArray;
 };
 
 // функция, которая выбирает случайный элемент из массива

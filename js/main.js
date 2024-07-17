@@ -1,3 +1,5 @@
 import { getPhotosDataArray } from './data.js';
+import { createPictures } from './thumbnails.js';
 
-console.log(getPhotosDataArray());
+getPhotosDataArray();
+createPictures();
