@@ -12,16 +12,14 @@ const getRandomIntegerArray = (min, max) => {
 
   while (randomIntegerArray.length !== max) {
     let newElement = getRandomInteger(min, max);
-    let result = randomIntegerArray.every((element) => {
-      return element !== newElement;
-      });
+    const result = randomIntegerArray.every((element) => element !== newElement);
 
     if (result) {
-        randomIntegerArray.push(newElement);
-      } else {
-        newElement = getRandomInteger(min, max);
-      };
-  };
+      randomIntegerArray.push(newElement);
+    } else {
+      newElement = getRandomInteger(min, max);
+    }
+  }
   return randomIntegerArray;
 };
 
