@@ -12,13 +12,13 @@ const getRandomIntegerArray = (min, max) => {
 
   for (let i = 0; i < max; i++) {
     let newElement = getRandomInteger(min, max);
-    randomIntegerArray.forEach(element => {
+    randomIntegerArray.forEach((element) => {
       if (element === newElement) {
-          newElement = getRandomInteger(min, max);
-        }
+        newElement = getRandomInteger(min, max);
+      }
     });
     randomIntegerArray.push(newElement);
-    }
+  }
   return randomIntegerArray;
 };
 

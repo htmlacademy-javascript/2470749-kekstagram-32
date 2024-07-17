@@ -80,11 +80,11 @@ const createRandomCommentMessage = (quantity) => {
 
   for (let i = 1; i < quantity; i++) {
     if (messageArray[i] !== newElement) {
-      messageArray.push(newElement)
+      messageArray.push(newElement);
     } else {
-      newElement = getRandomArrayElement(MESSAGES)
+      newElement = getRandomArrayElement(MESSAGES);
     }
-  };
+  }
 
   return messageArray.join(' ');
 };
@@ -111,8 +111,6 @@ const getPhotoData = (number) => ({
 });
 
 // функция, которой задаешь количество фото и она формирует массив данных об этих фотографий с помощью функции getLoadedPhotoData
-const getPhotosDataArray = () => {
-  return Array.from({ length: LOADED_PHOTOS_COUNT }, (_, i) => getPhotoData(i));
-};
+const getPhotosDataArray = () => Array.from({ length: LOADED_PHOTOS_COUNT }, (_, i) => getPhotoData(i));
 
 export { getPhotosDataArray };

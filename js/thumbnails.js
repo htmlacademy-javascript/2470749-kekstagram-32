@@ -7,7 +7,7 @@
 // Количество комментариев comments выведите в блок .picture__comments.
 // Отрисуйте сгенерированные DOM-элементы в блок .pictures. Для вставки элементов используйте DocumentFragment.
 
-import { getPhotosDataArray } from "./data";
+import { getPhotosDataArray } from './data';
 
 const createPictures = () => {
   const pictures = getPhotosDataArray();
