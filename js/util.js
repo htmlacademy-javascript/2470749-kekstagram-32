@@ -10,15 +10,18 @@ const getRandomInteger = (a, b) => {
 const getRandomIntegerArray = (min, max) => {
   const randomIntegerArray = [];
 
-  for (let i = 0; i < max; i++) {
+  while (randomIntegerArray.length !== max) {
     let newElement = getRandomInteger(min, max);
-    randomIntegerArray.forEach((element) => {
-      if (element === newElement) {
+    let result = randomIntegerArray.every((element) => {
+      return element !== newElement;
+      });
+
+    if (result) {
+        randomIntegerArray.push(newElement);
+      } else {
         newElement = getRandomInteger(min, max);
-      }
-    });
-    randomIntegerArray.push(newElement);
-  }
+      };
+  };
   return randomIntegerArray;
 };
 
