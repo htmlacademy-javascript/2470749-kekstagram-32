@@ -107,16 +107,10 @@ const getPhotoData = (number) => ({
   url: `photos/${photosUrlArray[number]}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(LIKES_MIN_COUNT, LIKES_MAX_COUNT),
-  comments: Array.from({length: getRandomInteger(0, COMMENTS_COUNT)}, getPhotoComment),
+  comments: Array.from({ length: getRandomInteger(0, COMMENTS_COUNT) }, getPhotoComment),
 });
 
 // функция, которой задаешь количество фото и она формирует массив данных об этих фотографий с помощью функции getLoadedPhotoData
-const getPhotosDataArray = (quantity) => {
-  const array = [];
-  for (let i = 0; i < quantity; i++) {
-    array.push(getPhotoData(i));
-  }
-  return array;
-};
+const getPhotosDataArray = () => Array.from({ length: LOADED_PHOTOS_COUNT }, (_, i) => getPhotoData(i));
 
-export { getPhotosDataArray, LOADED_PHOTOS_COUNT };
+export { getPhotosDataArray };

@@ -1,3 +1,5 @@
-import { getPhotosDataArray, LOADED_PHOTOS_COUNT } from './data.js';
+import { getPhotosDataArray } from './data.js';
+import { createPictures } from './thumbnails.js';
 
-getPhotosDataArray(LOADED_PHOTOS_COUNT);
+getPhotosDataArray();
+createPictures();

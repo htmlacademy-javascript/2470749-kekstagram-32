@@ -76,7 +76,7 @@ const isMeetingOnWorkingDay = (startWork, endWork, startMeeting, meetingLength) 
   const endWorkModified = getModifiedTime(endWork);
   const endOfMeeting = getModifiedTime(startMeeting) + convertMinutesInHours(meetingLength);
 
-  let result = endOfMeeting - startWorkModified >= 0 && endWorkModified - endOfMeeting >= 0;
+  const result = endOfMeeting - startWorkModified >= 0 && endWorkModified - endOfMeeting >= 0;
 
   return result;
 };
