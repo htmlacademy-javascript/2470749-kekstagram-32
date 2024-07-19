@@ -14,8 +14,6 @@ const createPictures = () => {
   const picturesCollection = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
 
-  const picturesCollectionFragment = document.createDocumentFragment();
-
   pictures.forEach((picture) => {
     const pictureElement = pictureTemplate.cloneNode(true);
 
@@ -26,8 +24,6 @@ const createPictures = () => {
 
     picturesCollection.append(pictureElement);
   });
-
-  picturesCollection.append(picturesCollectionFragment);
 };
 
 export { createPictures };
