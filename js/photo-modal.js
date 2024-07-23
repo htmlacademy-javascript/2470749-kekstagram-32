@@ -1,6 +1,6 @@
-import { isEscapeKey, isEnterKey } from "./util";
-import { renderFullsizePhoto } from "./fullsize-render";
-import { pictures } from "./thumbnails-render";
+import { isEscapeKey, isEnterKey } from './util';
+import { renderFullsizePhoto } from './fullsize-render';
+import { pictures } from './thumbnails-render';
 
 const bigPictureModal = document.querySelector('.big-picture');
 const closeModalButton = document.querySelector('.big-picture__cancel');
@@ -11,7 +11,7 @@ const onDocumentEscKeyDown = (evt) => {
     evt.preventDefault();
     closePhotoModal();
   }
-}
+};
 
 function openPhotoModal() {
   bigPictureModal.classList.remove('hidden');
@@ -31,24 +31,24 @@ function closePhotoModal() {
 
 // открытие фото при клике на миниатюру (без клавиши enter)
 thumbnails.forEach((thumbnail) => {
-  thumbnail.addEventListener('click', function (evt) {
+  thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
     openPhotoModal();
 
     const getThumbnailUrl = () => {
-      let thumbnailFullUrl = evt.target.src;
+      const thumbnailFullUrl = evt.target.src;
       let thumbnailId = thumbnailFullUrl.split('photos/');
       thumbnailId = thumbnailId[1].split('.');
       thumbnailId = thumbnailId[0];
 
       const thumbnailUrl = `photos/${thumbnailId}.jpg`;
-      const photoDataObject = pictures.filter(el => el.url === thumbnailUrl);
+      const photoDataObject = pictures.filter((el) => el.url === thumbnailUrl);
 
       return photoDataObject;
     };
 
     renderFullsizePhoto(getThumbnailUrl());
-  })
+  });
 });
 
 // закрытие фото при нажатии на кнопку крестик в модальном окне + с помощью клавиши enter

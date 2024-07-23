@@ -3,7 +3,7 @@ const renderComments = (commentsArray) => {
   const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
   const commentsListArray = document.querySelectorAll('.social__comment');
 
-  commentsListArray.forEach(element => element.remove());
+  commentsListArray.forEach((element) => element.remove());
 
   commentsArray.forEach((comment) => {
     const commentElement = commentTemplate.cloneNode(true);
