@@ -1,5 +1,7 @@
 import { getPhotosDataArray } from './data.js';
-import { createPictures } from './thumbnails.js';
+import { renderThumbnails } from './thumbnails-render.js';
+import './photo-modal.js'
 
 getPhotosDataArray();
-createPictures();
+renderThumbnails();
+

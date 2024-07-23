@@ -36,4 +36,9 @@ const createGenerator = () => {
   };
 };
 
-export { getRandomInteger, getRandomIntegerArray, getRandomArrayElement, createGenerator };
+// функция, которая возвращает true / false в зависимости от наличия или отсутствия нажатия клавиши esc
+const isEscapeKey = (evt) => evt.key === 'Escape';
+// то же самое с клавишей enter
+const isEnterKey = (evt) => evt.key === 'Enter';
+
+export { getRandomInteger, getRandomIntegerArray, getRandomArrayElement, createGenerator, isEscapeKey, isEnterKey };
