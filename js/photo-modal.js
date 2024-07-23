@@ -34,7 +34,7 @@ thumbnails.forEach((thumbnail) => {
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
     openPhotoModal();
-
+    // функция для получения URL миниатюры, на которую нажал пользователь, для отрисовки полной версии фото в модальном окне
     const getThumbnailUrl = () => {
       const thumbnailFullUrl = evt.target.src;
       let thumbnailId = thumbnailFullUrl.split('photos/');
