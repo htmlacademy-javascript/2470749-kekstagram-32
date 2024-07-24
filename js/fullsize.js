@@ -1,4 +1,4 @@
-import { renderComments } from './comments-render';
+import { renderComments } from './comments.js';
 
 // Реализован сценарий просмотра фотографий в полноразмерном режиме.
 const renderFullsizePhoto = (object) => {

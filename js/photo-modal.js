@@ -1,6 +1,6 @@
-import { isEscapeKey, isEnterKey } from './util';
-import { renderFullsizePhoto } from './fullsize-render';
-import { pictures } from './thumbnails-render';
+import { isEscapeKey, isEnterKey } from './util.js';
+import { renderFullsizePhoto } from './fullsize.js';
+import { pictures } from './thumbnails.js';
 
 const bigPictureModal = document.querySelector('.big-picture');
 const closeModalButton = document.querySelector('.big-picture__cancel');
