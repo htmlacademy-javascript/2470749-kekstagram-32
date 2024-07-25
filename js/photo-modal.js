@@ -1,6 +1,4 @@
-import { isEscapeKey, isEnterKey } from './util.js';
-import { renderFullsizePhoto } from './fullsize.js';
-import { pictures } from './thumbnails.js';
+import { isEscapeKey } from './util.js';
 
 const bigPictureModal = document.querySelector('.big-picture');
 const closeModalButton = document.querySelector('.big-picture__cancel');
@@ -26,39 +24,17 @@ function closePhotoModal() {
   bigPictureModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
+  const commentsListArray = document.querySelectorAll('.social__comment');
+  commentsListArray.forEach((element) => element.remove());
+
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 }
-
-// открытие фото при клике на миниатюру (без клавиши enter)
-thumbnails.forEach((thumbnail) => {
-  thumbnail.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    openPhotoModal();
-    // функция для получения URL миниатюры, на которую нажал пользователь, для отрисовки полной версии фото в модальном окне
-    const getThumbnailUrl = () => {
-      const thumbnailFullUrl = evt.target.src;
-      let thumbnailId = thumbnailFullUrl.split('photos/');
-      thumbnailId = thumbnailId[1].split('.');
-      thumbnailId = thumbnailId[0];
-
-      const thumbnailUrl = `photos/${thumbnailId}.jpg`;
-      const photoDataObject = pictures.filter((el) => el.url === thumbnailUrl);
-
-      return photoDataObject;
-    };
-
-    renderFullsizePhoto(getThumbnailUrl());
-  });
-});
 
 // закрытие фото при нажатии на кнопку крестик в модальном окне + с помощью клавиши enter
 closeModalButton.addEventListener('click', () => {
   closePhotoModal();
 });
 
-closeModalButton.addEventListener('keydown', (evt) => {
-  if (isEnterKey(evt)) {
-    closePhotoModal();
-  }
-});
+export { openPhotoModal };
+
 
