@@ -2,7 +2,6 @@ import { isEscapeKey } from './util.js';
 
 const bigPictureModal = document.querySelector('.big-picture');
 const closeModalButton = document.querySelector('.big-picture__cancel');
-const thumbnails = document.querySelectorAll('.pictures');
 
 const onDocumentEscKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
