@@ -23,15 +23,21 @@ const isStringPalindrome = (string) => {
 
 isStringPalindrome('Лёша на полке клопа нашёл ');
 
+// функция, которая модифицирует время в число, напр 8:30 = 8.3
+const getModifiedTime = (time) => {
+  const array = time.split(':');
+  const modifiedTime = Number(array.join('.'));
+  return modifiedTime;
+};
+
+// функция, которая переводит минуты в часы, напр 100 минут = 1.4
+const convertMinutesInHours = (minutes) => {
+  const timeInHours = Number(`${Math.floor(minutes / 60)}.${Math.floor(minutes % 60)}`);
+  return timeInHours;
+};
+
 // Функция принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа.
-// Если в строке нет ни одной цифры, функция должна вернуть NaN:
-
-// имяФункции('2023 год');            // 2023
-// имяФункции('ECMAScript 2022');     // 2022
-// имяФункции('1 кефир, 0.5 батона'); // 105
-// имяФункции('агент 007');           // 7
-// имяФункции('а я томат');           // NaN
-
+// Если в строке нет ни одной цифры, функция должна вернуть NaN
 const getNumbers = function (string) {
   const modifiedString = string.replaceAll(' ', '').toLowerCase();
   let result = '';
@@ -50,21 +56,7 @@ const getNumbers = function (string) {
   return result;
 };
 
-getNumbers('0029 of June 2024 year');
-
-// функция, которая модифицирует время в число, напр 8:30 = 8.3
-const getModifiedTime = (time) => {
-  const array = time.split(':');
-  const modifiedTime = Number(array.join('.'));
-  return modifiedTime;
-};
-
-// функция, которая переводит минуты в часы, напр 100 минут = 1.4
-const convertMinutesInHours = (minutes) => {
-  const timeInHours = Number(`${Math.floor(minutes / 60)}.${Math.floor(minutes % 60)}`);
-  return timeInHours;
-};
-
+getNumbers('Сегодня 22 июня 2024 года');
 /*
 функция, которая принимает время начала и конца рабочего дня, а также время старта и продолжительность встречи в минутах и возвращает true, если встреча не выходит за рамки рабочего дня, и false, если выходит.
 для проверки:
