@@ -1,4 +1,5 @@
 import { renderComments } from './comments.js';
+const SHOWN_COMMENTS_COUNT = 5;
 
 // Реализован сценарий просмотра фотографий в полноразмерном режиме.
 const renderFullsizePhoto = (object) => {
@@ -7,22 +8,45 @@ const renderFullsizePhoto = (object) => {
   const commentsShownCount = document.querySelector('.social__comment-shown-count');
   const commentsTotalCount = document.querySelector('.social__comment-total-count');
   const socialCaption = document.querySelector('.social__caption');
-  const comments = object[0].comments;
-  let shownCommentsCount = 2;
+  const loaderButton = document.querySelector('.social__comments-loader');
+  const commentsArray = object.comments;
 
-  bigPicture.querySelector('img').src = object[0].url;
-  bigPicture.querySelector('img').alt = object[0].description;
-  socialCaption.textContent = object[0].description;
-  likesCount.textContent = object[0].likes;
+  bigPicture.querySelector('img').src = object.url;
+  bigPicture.querySelector('img').alt = object.description;
+  socialCaption.textContent = object.description;
+  likesCount.textContent = object.likes;
+  commentsTotalCount.textContent = commentsArray.length;
 
-  if (object[0].comments.length < shownCommentsCount) {
-    shownCommentsCount = object[0].comments.length;
+  // отрисовка комментариев:
+  let loadedCommentsCount = 0;
+
+  renderComments(commentsArray, loadedCommentsCount);
+
+  if (commentsArray.length <= SHOWN_COMMENTS_COUNT) {
+    loaderButton.classList.add('hidden');
+    loadedCommentsCount = commentsArray.length;
+  } else {
+    loadedCommentsCount = SHOWN_COMMENTS_COUNT;
   }
 
-  commentsShownCount.textContent = shownCommentsCount;
-  commentsTotalCount.textContent = object[0].comments.length;
+  loaderButton.addEventListener('click', (evt) => {
+    renderComments(commentsArray, loadedCommentsCount);
 
-  renderComments(comments);
+    if (commentsArray.length - loadedCommentsCount < SHOWN_COMMENTS_COUNT) {
+      loadedCommentsCount += commentsArray.length - loadedCommentsCount;
+    } else {
+      loadedCommentsCount += SHOWN_COMMENTS_COUNT;
+    }
+
+    commentsShownCount.textContent = loadedCommentsCount;
+
+    if (loadedCommentsCount === commentsArray.length) {
+      loadedCommentsCount = 0;
+      loaderButton.classList.add('hidden');
+    };
+  });
+
+  commentsShownCount.textContent = loadedCommentsCount;
 };
 
-export { renderFullsizePhoto };
+export { renderFullsizePhoto }

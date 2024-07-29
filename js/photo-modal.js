@@ -13,8 +13,6 @@ const onDocumentEscKeyDown = (evt) => {
 function openPhotoModal() {
   bigPictureModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.querySelector('.social__comment-count').classList.add('hidden');
-  document.querySelector('.comments-loader').classList.add('hidden');
 
   document.addEventListener('keydown', onDocumentEscKeyDown);
 }
@@ -29,7 +27,7 @@ function closePhotoModal() {
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 }
 
-// закрытие фото при нажатии на кнопку крестик в модальном окне + с помощью клавиши enter
+// закрытие фото в модальном окне
 closeModalButton.addEventListener('click', () => {
   closePhotoModal();
 });

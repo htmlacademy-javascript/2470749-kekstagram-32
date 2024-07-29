@@ -10,19 +10,19 @@ const renderThumbnails = () => {
   const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
   pictures.forEach((picture) => {
+    const {url, description, likes, comments, id} = picture;
     const thumbnailElement = thumbnailTemplate.cloneNode(true);
 
-    thumbnailElement.querySelector('.picture__img').src = picture.url;
-    thumbnailElement.querySelector('.picture__img').alt = picture.description;
-    thumbnailElement.querySelector('.picture__likes').textContent = picture.likes;
-    thumbnailElement.querySelector('.picture__comments').textContent = picture.comments.length;
+    thumbnailElement.querySelector('.picture__img').src = url;
+    thumbnailElement.querySelector('.picture__img').alt = description;
+    thumbnailElement.querySelector('.picture__likes').textContent = likes;
+    thumbnailElement.querySelector('.picture__comments').textContent = comments.length;
 
     // открытие фото при клике на миниатюру
     thumbnailElement.addEventListener('click', (evt) => {
       evt.preventDefault();
       openPhotoModal();
-      const photoDataObject = pictures.filter((el) => el.id === Number(picture.id));
-      renderFullsizePhoto(photoDataObject);
+      renderFullsizePhoto(picture);
     });
 
     thumbnailsCollection.append(thumbnailElement);
