@@ -1,4 +1,5 @@
 import { renderComments } from './comments.js';
+const SHOWN_COMMENTS_COUNT = 5;
 
 // Реализован сценарий просмотра фотографий в полноразмерном режиме.
 const renderFullsizePhoto = (object) => {
@@ -9,7 +10,6 @@ const renderFullsizePhoto = (object) => {
   const socialCaption = document.querySelector('.social__caption');
   const loaderButton = document.querySelector('.social__comments-loader');
   const commentsArray = object[0].comments;
-  let loadedCommentsCount = 0;
 
   bigPicture.querySelector('img').src = object[0].url;
   bigPicture.querySelector('img').alt = object[0].description;
@@ -17,41 +17,38 @@ const renderFullsizePhoto = (object) => {
   likesCount.textContent = object[0].likes;
   commentsTotalCount.textContent = object[0].comments.length;
 
-  // отрисовка комментариев
+  // отрисовка комментариев:
+  let loadedCommentsCount = 0;
+
   renderComments(commentsArray, loadedCommentsCount);
 
-  if (commentsArray.length <= 5) {
+  if (commentsArray.length <= SHOWN_COMMENTS_COUNT) {
     loaderButton.classList.add('hidden');
     loadedCommentsCount = commentsArray.length;
   } else {
-    loadedCommentsCount = 5;
+    loadedCommentsCount = SHOWN_COMMENTS_COUNT;
   }
 
   loaderButton.addEventListener('click', (evt) => {
     evt.preventDefault();
+
     renderComments(commentsArray, loadedCommentsCount);
 
-    if (commentsArray.length - loadedCommentsCount < 5) {
+    if (commentsArray.length - loadedCommentsCount < SHOWN_COMMENTS_COUNT) {
       loadedCommentsCount += commentsArray.length - loadedCommentsCount;
     } else {
-      loadedCommentsCount += 5;
+      loadedCommentsCount += SHOWN_COMMENTS_COUNT;
     }
 
     commentsShownCount.textContent = loadedCommentsCount;
 
-    console.log('колво загруженных комментов ' + loadedCommentsCount);
-    console.log('колво комментов в массиве ' + commentsArray.length);
+    if (loadedCommentsCount === commentsArray.length) {
+      loadedCommentsCount = 0;
+      loaderButton.classList.add('hidden');
+    };
   });
 
   commentsShownCount.textContent = loadedCommentsCount;
-
-  console.log('колво загруженных комментов ' + loadedCommentsCount);
-  console.log('колво комментов в массиве ' + commentsArray.length);
-
-  if (loadedCommentsCount === commentsArray.length) {
-    loadedCommentsCount = 0;
-    loaderButton.classList.add('hidden');
-  };
 };
 
 export { renderFullsizePhoto }

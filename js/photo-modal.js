@@ -27,7 +27,7 @@ function closePhotoModal() {
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 }
 
-// закрытие фото при нажатии на кнопку крестик в модальном окне
+// закрытие фото в модальном окне
 closeModalButton.addEventListener('click', () => {
   closePhotoModal();
 });

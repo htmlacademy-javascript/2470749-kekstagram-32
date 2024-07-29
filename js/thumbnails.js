@@ -8,7 +8,6 @@ const pictures = getPhotosDataArray();
 const renderThumbnails = () => {
   const thumbnailsCollection = document.querySelector('.pictures');
   const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
-  const loaderButton = document.querySelector('.social__comments-loader');
 
   pictures.forEach(({url, description, likes, comments, id}) => {
     const thumbnailElement = thumbnailTemplate.cloneNode(true);
@@ -24,7 +23,6 @@ const renderThumbnails = () => {
       openPhotoModal();
       const photoDataObject = pictures.filter((el) => el.id === Number(id));
       renderFullsizePhoto(photoDataObject);
-      loaderButton.classList.remove('hidden');
     });
 
     thumbnailsCollection.append(thumbnailElement);
