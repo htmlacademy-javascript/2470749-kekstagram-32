@@ -9,13 +9,13 @@ const renderFullsizePhoto = (object) => {
   const commentsTotalCount = document.querySelector('.social__comment-total-count');
   const socialCaption = document.querySelector('.social__caption');
   const loaderButton = document.querySelector('.social__comments-loader');
-  const commentsArray = object[0].comments;
+  const commentsArray = object.comments;
 
-  bigPicture.querySelector('img').src = object[0].url;
-  bigPicture.querySelector('img').alt = object[0].description;
-  socialCaption.textContent = object[0].description;
-  likesCount.textContent = object[0].likes;
-  commentsTotalCount.textContent = object[0].comments.length;
+  bigPicture.querySelector('img').src = object.url;
+  bigPicture.querySelector('img').alt = object.description;
+  socialCaption.textContent = object.description;
+  likesCount.textContent = object.likes;
+  commentsTotalCount.textContent = commentsArray.length;
 
   // отрисовка комментариев:
   let loadedCommentsCount = 0;
@@ -30,8 +30,6 @@ const renderFullsizePhoto = (object) => {
   }
 
   loaderButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-
     renderComments(commentsArray, loadedCommentsCount);
 
     if (commentsArray.length - loadedCommentsCount < SHOWN_COMMENTS_COUNT) {

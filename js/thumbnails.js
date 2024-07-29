@@ -9,7 +9,8 @@ const renderThumbnails = () => {
   const thumbnailsCollection = document.querySelector('.pictures');
   const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-  pictures.forEach(({url, description, likes, comments, id}) => {
+  pictures.forEach((picture) => {
+    const {url, description, likes, comments, id} = picture;
     const thumbnailElement = thumbnailTemplate.cloneNode(true);
 
     thumbnailElement.querySelector('.picture__img').src = url;
@@ -21,8 +22,7 @@ const renderThumbnails = () => {
     thumbnailElement.addEventListener('click', (evt) => {
       evt.preventDefault();
       openPhotoModal();
-      const photoDataObject = pictures.filter((el) => el.id === Number(id));
-      renderFullsizePhoto(photoDataObject);
+      renderFullsizePhoto(picture);
     });
 
     thumbnailsCollection.append(thumbnailElement);
