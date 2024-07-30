@@ -3,7 +3,7 @@ const renderComments = (commentsArray, loadedCommentsCount) => {
   const commentsList = document.querySelector('.social__comments');
   const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
-  let minId = loadedCommentsCount;
+  const minId = loadedCommentsCount;
   let maxId = loadedCommentsCount + 5;
 
   if (maxId > commentsArray.length) {
@@ -18,7 +18,7 @@ const renderComments = (commentsArray, loadedCommentsCount) => {
     commentElement.querySelector('.social__text').textContent = commentsArray[i].message;
 
     commentsList.append(commentElement);
-  };
+  }
 };
 
 export { renderComments };

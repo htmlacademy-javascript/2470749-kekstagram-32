@@ -29,7 +29,10 @@ const renderFullsizePhoto = (object) => {
     loadedCommentsCount = SHOWN_COMMENTS_COUNT;
   }
 
+  commentsShownCount.textContent = loadedCommentsCount;
+
   loaderButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
     renderComments(commentsArray, loadedCommentsCount);
 
     if (commentsArray.length - loadedCommentsCount < SHOWN_COMMENTS_COUNT) {
@@ -41,12 +44,16 @@ const renderFullsizePhoto = (object) => {
     commentsShownCount.textContent = loadedCommentsCount;
 
     if (loadedCommentsCount === commentsArray.length) {
-      loadedCommentsCount = 0;
+      // loadedCommentsCount = 0;
       loaderButton.classList.add('hidden');
-    };
+    }
+
+    console.log('2. колво загруженных комментов: ' + loadedCommentsCount);
+    console.log('2. длина исх массива: ' + commentsArray.length);
   });
 
-  commentsShownCount.textContent = loadedCommentsCount;
+  console.log('1. колво загруженных комментов: ' + loadedCommentsCount);
+  console.log('1. длина исх массива: ' + commentsArray.length);
 };
 
-export { renderFullsizePhoto }
+export { renderFullsizePhoto };

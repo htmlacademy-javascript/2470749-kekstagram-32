@@ -2,6 +2,7 @@ import { isEscapeKey } from './util.js';
 
 const bigPictureModal = document.querySelector('.big-picture');
 const closeModalButton = document.querySelector('.big-picture__cancel');
+const loaderButton = document.querySelector('.social__comments-loader');
 
 const onDocumentEscKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -23,6 +24,8 @@ function closePhotoModal() {
 
   const commentsListArray = document.querySelectorAll('.social__comment');
   commentsListArray.forEach((element) => element.remove());
+
+  loaderButton.classList.remove('hidden');
 
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 }

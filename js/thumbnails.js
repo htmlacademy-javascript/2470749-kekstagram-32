@@ -10,7 +10,7 @@ const renderThumbnails = () => {
   const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
   pictures.forEach((picture) => {
-    const {url, description, likes, comments, id} = picture;
+    const {url, description, likes, comments} = picture;
     const thumbnailElement = thumbnailTemplate.cloneNode(true);
 
     thumbnailElement.querySelector('.picture__img').src = url;
