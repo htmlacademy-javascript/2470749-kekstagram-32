@@ -1,15 +1,21 @@
 import { renderComments } from './comments.js';
+
 const SHOWN_COMMENTS_COUNT = 5;
+
+const commentsShownCount = document.querySelector('.social__comment-shown-count');
+const loaderButton = document.querySelector('.social__comments-loader');
+let commentsArray;
+let loadedCommentsCount;
 
 // Реализован сценарий просмотра фотографий в полноразмерном режиме.
 const renderFullsizePhoto = (object) => {
   const bigPicture = document.querySelector('.big-picture__img');
   const likesCount = document.querySelector('.likes-count');
-  const commentsShownCount = document.querySelector('.social__comment-shown-count');
+
   const commentsTotalCount = document.querySelector('.social__comment-total-count');
   const socialCaption = document.querySelector('.social__caption');
-  const loaderButton = document.querySelector('.social__comments-loader');
-  const commentsArray = object.comments;
+
+  commentsArray = object.comments;
 
   bigPicture.querySelector('img').src = object.url;
   bigPicture.querySelector('img').alt = object.description;
@@ -18,7 +24,7 @@ const renderFullsizePhoto = (object) => {
   commentsTotalCount.textContent = commentsArray.length;
 
   // отрисовка комментариев:
-  let loadedCommentsCount = 0;
+  loadedCommentsCount = 0;
 
   renderComments(commentsArray, loadedCommentsCount);
 
@@ -30,30 +36,23 @@ const renderFullsizePhoto = (object) => {
   }
 
   commentsShownCount.textContent = loadedCommentsCount;
-
-  loaderButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    renderComments(commentsArray, loadedCommentsCount);
-
-    if (commentsArray.length - loadedCommentsCount < SHOWN_COMMENTS_COUNT) {
-      loadedCommentsCount += commentsArray.length - loadedCommentsCount;
-    } else {
-      loadedCommentsCount += SHOWN_COMMENTS_COUNT;
-    }
-
-    commentsShownCount.textContent = loadedCommentsCount;
-
-    if (loadedCommentsCount === commentsArray.length) {
-      // loadedCommentsCount = 0;
-      loaderButton.classList.add('hidden');
-    }
-
-    console.log('2. колво загруженных комментов: ' + loadedCommentsCount);
-    console.log('2. длина исх массива: ' + commentsArray.length);
-  });
-
-  console.log('1. колво загруженных комментов: ' + loadedCommentsCount);
-  console.log('1. длина исх массива: ' + commentsArray.length);
 };
+
+loaderButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  renderComments(commentsArray, loadedCommentsCount);
+
+  if (commentsArray.length - loadedCommentsCount < SHOWN_COMMENTS_COUNT) {
+    loadedCommentsCount += commentsArray.length - loadedCommentsCount;
+  } else {
+    loadedCommentsCount += SHOWN_COMMENTS_COUNT;
+  }
+
+  commentsShownCount.textContent = loadedCommentsCount;
+
+  if (loadedCommentsCount === commentsArray.length) {
+    loaderButton.classList.add('hidden');
+  }
+});
 
 export { renderFullsizePhoto };
