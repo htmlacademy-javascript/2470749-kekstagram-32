@@ -1,4 +1,4 @@
-import { isEscapeKey } from "./util";
+import { isEscapeKey } from './util';
 
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COMMENTS_LENGTH = 140;
@@ -57,21 +57,21 @@ const pristine = new Pristine(uploadForm, {
 
 // проверка количества хэштегов:
 const checkHashtagsArrayLength = (value) => {
-  const hashtagsArray = value.trim().split(" ");
+  const hashtagsArray = value.trim().split(' ');
 
   if (hashtagsArray.length === 0 || hashtagsArray.length <= MAX_HASHTAGS_COUNT) {
     return true;
   } else {
     return false;
   }
-}
+};
 
 // проверка повторяющихся хэштегов:
 const checkHashtagsRepeat = (value) => {
-  const hashtagsArray = value.trim().split(" ");
+  const hashtagsArray = value.trim().split(' ');
 
   const modifiedHashtagArray = hashtagsArray.map((hashtag) => {
-    let modifiedHashtag = hashtag.replaceAll(' ', '').toLowerCase();
+    const modifiedHashtag = hashtag.replaceAll(' ', '').toLowerCase();
     return modifiedHashtag;
   });
 
@@ -82,8 +82,8 @@ const checkHashtagsRepeat = (value) => {
       return true;
     } else {
       return false;
-    };
-  };
+    }
+  }
 };
 
 // проверка корректности введения символов хэштега:
@@ -103,7 +103,7 @@ const checkCommentLength = (value) => value.length <= MAX_COMMENTS_LENGTH;
 pristine.addValidator(hashtagField, checkHashtagsArrayLength, 'Максимум 5 хэштегов');
 pristine.addValidator(hashtagField, checkHashtagsRepeat, 'Выявлены повторяющиеся хэштеги');
 pristine.addValidator(hashtagField, checkHashtagsRegister, 'Введены недопустимые символы');
-pristine.addValidator(textCommentField, checkCommentLength, 'Длина комментария не более 140 символов')
+pristine.addValidator(textCommentField, checkCommentLength, 'Длина комментария не более 140 символов');
 
 // отправка формы, если все данные введены корректно:
 uploadForm.addEventListener('submit', (evt) => {
@@ -112,6 +112,5 @@ uploadForm.addEventListener('submit', (evt) => {
     evt.target.submit();
   }
 });
-
 
 
