@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util';
+import { isEscapeKey } from './util.js';
 
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COMMENTS_LENGTH = 140;

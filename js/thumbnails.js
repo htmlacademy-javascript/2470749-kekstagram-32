@@ -1,6 +1,5 @@
 import { getPhotosDataArray } from './data.js';
-import { renderFullsizePhoto } from './fullsize.js';
-import { openPhotoModal } from './photo-modal.js';
+import { renderFullsizePhoto, openPhotoModal } from './fullsize.js';
 
 const pictures = getPhotosDataArray();
 

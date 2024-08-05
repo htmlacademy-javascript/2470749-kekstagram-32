@@ -1,13 +1,47 @@
 import { renderComments } from './comments.js';
+import { isEscapeKey } from './util.js';
 
 const SHOWN_COMMENTS_COUNT = 5;
 
+const bigPictureModal = document.querySelector('.big-picture');
+const closeModalButton = document.querySelector('.big-picture__cancel');
 const commentsShownCount = document.querySelector('.social__comment-shown-count');
 const loaderButton = document.querySelector('.social__comments-loader');
 let commentsArray;
 let loadedCommentsCount;
 
-// Реализован сценарий просмотра фотографий в полноразмерном режиме.
+const onDocumentEscKeyDown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closePhotoModal();
+  }
+};
+
+function openPhotoModal() {
+  bigPictureModal.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+
+  document.addEventListener('keydown', onDocumentEscKeyDown);
+}
+
+function closePhotoModal() {
+  bigPictureModal.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+
+  const commentsListArray = document.querySelectorAll('.social__comment');
+  commentsListArray.forEach((element) => element.remove());
+
+  loaderButton.classList.remove('hidden');
+
+  document.removeEventListener('keydown', onDocumentEscKeyDown);
+}
+
+// закрытие фото в модальном окне
+closeModalButton.addEventListener('click', () => {
+  closePhotoModal();
+});
+
+// функция для просмотра фотографий в полноразмерном режиме
 const renderFullsizePhoto = (object) => {
   const bigPicture = document.querySelector('.big-picture__img');
   const likesCount = document.querySelector('.likes-count');
@@ -55,4 +89,4 @@ loaderButton.addEventListener('click', (evt) => {
   }
 });
 
-export { renderFullsizePhoto };
+export { renderFullsizePhoto, openPhotoModal };
