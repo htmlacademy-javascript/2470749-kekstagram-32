@@ -20,26 +20,24 @@ const onDocumentEscKeyDown = (evt) => {
   }
 };
 
-function openUploadModal() {
+const openUploadModal = () => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentEscKeyDown);
-}
+};
 
-function closeUploadModal() {
+const closeUploadModal = () => {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
   uploadInput.value = '';
 
   document.removeEventListener('keydown', onDocumentEscKeyDown);
-}
+};
 
 // открытие окна загрузки фото
-uploadInput.addEventListener('change', () => {
-  openUploadModal();
-});
+uploadInput.addEventListener('change', openUploadModal);
 
 // закрытие окна загрузки фото
 closeUploadModalButton.addEventListener('click', (evt) => {
@@ -59,11 +57,7 @@ const pristine = new Pristine(uploadForm, {
 const checkHashtagsArrayLength = (value) => {
   const hashtagsArray = value.trim().split(' ');
 
-  if (hashtagsArray.length === 0 || hashtagsArray.length <= MAX_HASHTAGS_COUNT) {
-    return true;
-  } else {
-    return false;
-  }
+  return hashtagsArray.length === 0 || hashtagsArray.length <= MAX_HASHTAGS_COUNT;
 };
 
 // проверка повторяющихся хэштегов:
@@ -78,12 +72,10 @@ const checkHashtagsRepeat = (value) => {
   for (let i = 0; i < modifiedHashtagArray.length; i++) {
     if (modifiedHashtagArray.length === 1) {
       return true;
-    } else if (modifiedHashtagArray.every((element) => element !== modifiedHashtagArray[i])) {
-      return true;
     } else {
-      return false;
-    }
-  }
+      return modifiedHashtagArray.every((element) => element !== modifiedHashtagArray[i])
+    };
+};
 };
 
 // проверка корректности введения символов хэштега:
@@ -112,5 +104,3 @@ uploadForm.addEventListener('submit', (evt) => {
     evt.target.submit();
   }
 });
-
-

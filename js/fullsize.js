@@ -17,14 +17,14 @@ const onDocumentEscKeyDown = (evt) => {
   }
 };
 
-function openPhotoModal() {
+const openPhotoModal = () => {
   bigPictureModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentEscKeyDown);
-}
+};
 
-function closePhotoModal() {
+const closePhotoModal = () => {
   bigPictureModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
@@ -34,12 +34,10 @@ function closePhotoModal() {
   loaderButton.classList.remove('hidden');
 
   document.removeEventListener('keydown', onDocumentEscKeyDown);
-}
+};
 
 // закрытие фото в модальном окне
-closeModalButton.addEventListener('click', () => {
-  closePhotoModal();
-});
+closeModalButton.addEventListener('click',  closePhotoModal);
 
 // функция для просмотра фотографий в полноразмерном режиме
 const renderFullsizePhoto = (object) => {
