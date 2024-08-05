@@ -1,6 +1,5 @@
 import { getPhotosDataArray } from './data.js';
-import { renderFullsizePhoto } from './fullsize.js';
-import { openPhotoModal } from './photo-modal.js';
+import { renderFullsizePhoto, openPhotoModal } from './fullsize.js';
 
 const pictures = getPhotosDataArray();
 
@@ -10,7 +9,7 @@ const renderThumbnails = () => {
   const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
   pictures.forEach((picture) => {
-    const {url, description, likes, comments, id} = picture;
+    const {url, description, likes, comments} = picture;
     const thumbnailElement = thumbnailTemplate.cloneNode(true);
 
     thumbnailElement.querySelector('.picture__img').src = url;
