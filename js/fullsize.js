@@ -72,8 +72,7 @@ const renderFullsizePhoto = (object) => {
   commentsShownCount.textContent = loadedCommentsCount;
 };
 
-loaderButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
+loaderButton.addEventListener('click', () => {
   renderComments(commentsArray, loadedCommentsCount);
 
   if (commentsArray.length - loadedCommentsCount < SHOWN_COMMENTS_COUNT) {
