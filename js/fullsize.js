@@ -10,13 +10,6 @@ const loaderButton = document.querySelector('.social__comments-loader');
 let commentsArray;
 let loadedCommentsCount;
 
-const onDocumentEscKeyDown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closePhotoModal();
-  }
-};
-
 const openPhotoModal = () => {
   bigPictureModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -36,8 +29,15 @@ const closePhotoModal = () => {
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 };
 
+function onDocumentEscKeyDown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closePhotoModal();
+  }
+}
+
 // закрытие фото в модальном окне
-closeModalButton.addEventListener('click',  closePhotoModal);
+closeModalButton.addEventListener('click', closePhotoModal);
 
 // функция для просмотра фотографий в полноразмерном режиме
 const renderFullsizePhoto = (object) => {

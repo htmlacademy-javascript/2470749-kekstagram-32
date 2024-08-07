@@ -51,36 +51,36 @@ const imgPreviewStartSettings = () => {
   effectLevel.value = '0';
   photoPreview.style.filter = 'none';
   imgEffectLevel.classList.add('hidden');
-}
+};
 
 imgPreviewStartSettings();
 
 // функция для создания слайдера
 const createSlider = () => {
-noUiSlider.create(effectLevelSlider, {
-  range: {
-    min: 0,
-    max: 1,
-  },
-  start: 0,
-  step: 0.1,
-  connect: 'lower',
-  format: {
-    to: (value) => Number(value),
-    from: (value) => Number(value),
-  }
-});
-}
+  noUiSlider.create(effectLevelSlider, {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 0,
+    step: 0.1,
+    connect: 'lower',
+    format: {
+      to: (value) => Number(value),
+      from: (value) => Number(value),
+    }
+  });
+};
 
 createSlider();
 
 // функция добавляет элементу img фильтр в стили css
 const addFilter = (intenseValue) => {
   const chosenFilterName = photoPreview.dataset.filter;
-  if (typeof chosenFilterName !== "undefined") {
+  if (typeof chosenFilterName !== 'undefined') {
     const effectName = effectsSettings[chosenFilterName].effect;
     const effectType = effectsSettings[chosenFilterName].type;
-    photoPreview.style.filter = effectName + '(' + intenseValue + effectType + ')';
+    photoPreview.style.filter = `${effectName }(${ intenseValue }${effectType })`;
   }
 };
 
@@ -93,11 +93,11 @@ effectLevelSlider.noUiSlider.on('update', () => {
 // изменяем параметры слайдера при клике на каждый фильтр
 effectItemInputs.forEach((item) => {
   item.addEventListener('click', (evt) => {
-    let chosenFilterName = evt.target.value.toUpperCase();
+    const chosenFilterName = evt.target.value.toUpperCase();
     photoPreview.dataset.filter = chosenFilterName;
-    let chosenEffectSettings = effectsSettings[chosenFilterName];
+    const chosenEffectSettings = effectsSettings[chosenFilterName];
 
-    if (chosenFilterName == 'NONE') {
+    if (chosenFilterName === 'NONE') {
       imgPreviewStartSettings();
     } else {
       imgEffectLevel.classList.remove('hidden');
@@ -109,6 +109,6 @@ effectItemInputs.forEach((item) => {
         start: chosenEffectSettings.max,
         step: chosenEffectSettings.step,
       });
-    };
+    }
   });
 });
