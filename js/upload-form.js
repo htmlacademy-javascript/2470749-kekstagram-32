@@ -13,13 +13,6 @@ const textCommentField = document.querySelector('.text__description');
 
 const isFieldFocused = () => document.activeElement === textCommentField || document.activeElement === hashtagField;
 
-const onDocumentEscKeyDown = (evt) => {
-  if (isEscapeKey(evt) && !isFieldFocused()) {
-    evt.preventDefault();
-    closeUploadModal();
-  }
-};
-
 const openUploadModal = () => {
   uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -35,6 +28,13 @@ const closeUploadModal = () => {
 
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 };
+
+function onDocumentEscKeyDown(evt) {
+  if (isEscapeKey(evt) && !isFieldFocused()) {
+    evt.preventDefault();
+    closeUploadModal();
+  }
+}
 
 // открытие окна загрузки фото
 uploadInput.addEventListener('change', openUploadModal);
@@ -73,9 +73,9 @@ const checkHashtagsRepeat = (value) => {
     if (modifiedHashtagArray.length === 1) {
       return true;
     } else {
-      return modifiedHashtagArray.every((element) => element !== modifiedHashtagArray[i])
-    };
-};
+      return modifiedHashtagArray.every((element) => element !== modifiedHashtagArray[i]);
+    }
+  }
 };
 
 // проверка корректности введения символов хэштега:
@@ -102,5 +102,33 @@ uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
     evt.target.submit();
+  }
+});
+
+// реализовано изменение размера изображения при нажатии на кнопки + и -
+const plusScaleButton = document.querySelector('.scale__control--bigger');
+const minusScaleButton = document.querySelector('.scale__control--smaller');
+const scale = document.querySelector('.scale__control--value');
+const photoPreview = document.querySelector('.img-upload__preview');
+
+const SCALE_STEP = 25;
+const MAX_SCALE = 100;
+const MIN_SCALE = 25;
+
+plusScaleButton.addEventListener('click', () => {
+  const currentScaleValue = Number(scale.value);
+
+  if (currentScaleValue < MAX_SCALE) {
+    scale.value = `${currentScaleValue + SCALE_STEP }%`;
+    photoPreview.style.transform = `scale(${ scale.value })`;
+  }
+});
+
+minusScaleButton.addEventListener('click', () => {
+  const currentScaleValue = Number(scale.value);
+
+  if (currentScaleValue > MIN_SCALE) {
+    scale.value = `${currentScaleValue - SCALE_STEP }%`;
+    photoPreview.style.transform = `scale(${ scale.value })`;
   }
 });
