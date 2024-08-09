@@ -112,3 +112,5 @@ effectItemInputs.forEach((item) => {
     }
   });
 });
+
+export { imgPreviewStartSettings }
