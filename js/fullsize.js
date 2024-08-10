@@ -7,6 +7,7 @@ const bigPictureModal = document.querySelector('.big-picture');
 const closeModalButton = document.querySelector('.big-picture__cancel');
 const commentsShownCount = document.querySelector('.social__comment-shown-count');
 const loaderButton = document.querySelector('.social__comments-loader');
+
 let commentsArray;
 let loadedCommentsCount;
 
@@ -37,22 +38,24 @@ function onDocumentEscKeyDown(evt) {
 }
 
 // закрытие фото в модальном окне
-closeModalButton.addEventListener('click', closePhotoModal);
+const onCloseButtonClick = () => {closePhotoModal()};
+
+closeModalButton.addEventListener('click', onCloseButtonClick);
 
 // функция для просмотра фотографий в полноразмерном режиме
-const renderFullsizePhoto = (object) => {
+const renderFullsizePhoto = (photoData) => {
   const bigPicture = document.querySelector('.big-picture__img');
   const likesCount = document.querySelector('.likes-count');
 
   const commentsTotalCount = document.querySelector('.social__comment-total-count');
   const socialCaption = document.querySelector('.social__caption');
 
-  commentsArray = object.comments;
+  commentsArray = photoData.comments;
 
-  bigPicture.querySelector('img').src = object.url;
-  bigPicture.querySelector('img').alt = object.description;
-  socialCaption.textContent = object.description;
-  likesCount.textContent = object.likes;
+  bigPicture.querySelector('img').src = photoData.url;
+  bigPicture.querySelector('img').alt = photoData.description;
+  socialCaption.textContent = photoData.description;
+  likesCount.textContent = photoData.likes;
   commentsTotalCount.textContent = commentsArray.length;
 
   // отрисовка комментариев:
