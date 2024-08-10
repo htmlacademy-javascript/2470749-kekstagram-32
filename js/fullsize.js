@@ -38,7 +38,9 @@ function onDocumentEscKeyDown(evt) {
 }
 
 // закрытие фото в модальном окне
-const onCloseButtonClick = () => {closePhotoModal()};
+const onCloseButtonClick = () => {
+  closePhotoModal();
+};
 
 closeModalButton.addEventListener('click', onCloseButtonClick);
 

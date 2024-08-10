@@ -6,14 +6,14 @@ const route = {
 
 const getData = (onSuccess, onFail) => {
   fetch(BASE_URL + route.GET_DATA)
-  .then((response) => response.json())
-  .then((picturesData) => {
-    onSuccess(picturesData);
-  })
-  .catch(() => {
-    onFail();
-  });
-}
+    .then((response) => response.json())
+    .then((picturesData) => {
+      onSuccess(picturesData);
+    })
+    .catch(() => {
+      onFail();
+    });
+};
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(

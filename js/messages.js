@@ -11,39 +11,39 @@ const errorButton = errorMessage.querySelector('.error__button');
 const showGetDataError = () => {
   document.body.appendChild(dataErrorMessage);
 
-  setTimeout(function(){
+  setTimeout(() =>{
     dataErrorMessage.remove();
   },SHOW_GET_DATA_ERROR_TIME);
-}
+};
 
 // показ сообщения об успешной отправке формы
 const closeUploadSuccessMessageByEsc = (evt) => {
   evt.preventDefault();
   successMessage.remove();
-}
+};
 
 const showPostSucsessMessage = () => {
   document.body.appendChild(successMessage);
   document.addEventListener('keydown', closeUploadSuccessMessageByEsc);
-}
+};
 
 successButton.addEventListener('click', () => {
   successMessage.remove();
-})
+});
 
 // показ сообщения об ошибке при отправке формы
 const closeUploadErrorMessageByEsc = (evt) => {
   evt.preventDefault();
   errorMessage.remove();
-}
+};
 
 const showPostErrorMessage = () => {
   document.body.appendChild(errorMessage);
   document.addEventListener('keydown', closeUploadErrorMessageByEsc);
-}
+};
 
 errorButton.addEventListener('click', () => {
   errorMessage.remove();
-})
+});
 
 export {showGetDataError, showPostSucsessMessage, showPostErrorMessage };

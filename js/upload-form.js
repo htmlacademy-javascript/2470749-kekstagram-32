@@ -42,9 +42,9 @@ const clearFormData = () => {
   textCommentField.value = '';
   noneFilterItem.checked = true;
   imgPreviewStartSettings();
-  scale.value = 100 + '%';
-  photoPreview.style.transform = 'scale(' + scale.value + ')';
-}
+  scale.value = `${100}%`;
+  photoPreview.style.transform = `scale(${scale.value})`;
+};
 
 const closeUploadModal = () => {
   uploadOverlay.classList.add('hidden');
@@ -132,7 +132,7 @@ const setUploadFormSubmit = (onSuccess) => {
       submitButton.disabled = true;
       sendData(
         () => {
-          onSuccess(),
+          onSuccess();
           submitButton.disabled = false;
           showPostSucsessMessage();
         },
@@ -142,7 +142,7 @@ const setUploadFormSubmit = (onSuccess) => {
         },
         new FormData(evt.target),
       );
-    };
+    }
   });
 };
 

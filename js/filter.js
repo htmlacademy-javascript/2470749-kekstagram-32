@@ -113,4 +113,4 @@ effectItemInputs.forEach((item) => {
   });
 });
 
-export { imgPreviewStartSettings }
+export { imgPreviewStartSettings };
