@@ -6,9 +6,12 @@ import { showPostErrorMessage, showPostSucsessMessage } from './messages.js';
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COMMENTS_LENGTH = 140;
 const MAX_HASHTAGS_COUNT = 5;
-const SCALE_STEP = 25;
-const MAX_SCALE = 100;
-const MIN_SCALE = 25;
+
+const scaleSettings = {
+  STEP: 25,
+  MAX: 100,
+  MIN: 25,
+};
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -149,8 +152,8 @@ setUploadFormSubmit(closeUploadModal);
 plusScaleButton.addEventListener('click', () => {
   const currentScaleValue = parseInt(scale.value, 10);
 
-  if (currentScaleValue < MAX_SCALE) {
-    scale.value = `${currentScaleValue + SCALE_STEP}%`;
+  if (currentScaleValue < scaleSettings.MAX) {
+    scale.value = `${currentScaleValue + scaleSettings.STEP}%`;
     photoPreview.style.transform = `scale(${scale.value})`;
   }
 });
@@ -158,10 +161,8 @@ plusScaleButton.addEventListener('click', () => {
 minusScaleButton.addEventListener('click', () => {
   const currentScaleValue = parseInt(scale.value, 10);
 
-  if (currentScaleValue > MIN_SCALE) {
-    scale.value = `${currentScaleValue - SCALE_STEP}%`;
+  if (currentScaleValue > scaleSettings.MIN) {
+    scale.value = `${currentScaleValue - scaleSettings.STEP}%`;
     photoPreview.style.transform = `scale(${scale.value})`;
   }
 });
-
-export { setUploadFormSubmit };
