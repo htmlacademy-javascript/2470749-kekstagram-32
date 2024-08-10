@@ -1,6 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { imgPreviewStartSettings } from './filter.js';
 import { sendData } from './api.js';
+import { showPostErrorMessage, showPostSucsessMessage } from './messages.js';
 
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COMMENTS_LENGTH = 140;
@@ -21,10 +22,6 @@ const minusScaleButton = document.querySelector('.scale__control--smaller');
 const scale = document.querySelector('.scale__control--value');
 const photoPreview = document.querySelector('.img-upload__preview');
 const submitButton = document.querySelector('.img-upload__submit');
-const successMessage = document.querySelector('#success').content.querySelector('.success');
-const successButton = successMessage.querySelector('.success__button');
-const errorMessage = document.querySelector('#error').content.querySelector('.error');
-const errorButton = errorMessage.querySelector('.error__button');
 
 const isFieldFocused = () => document.activeElement === textCommentField || document.activeElement === hashtagField;
 
@@ -49,8 +46,6 @@ const clearFormData = () => {
 const closeUploadModal = () => {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-
-  uploadInput.value = '';
 
   clearFormData();
 
@@ -125,64 +120,26 @@ pristine.addValidator(hashtagField, checkHashtagsRepeat, 'Выявлены по�
 pristine.addValidator(hashtagField, checkHashtagsRegister, 'Введены недопустимые символы');
 pristine.addValidator(textCommentField, checkCommentLength, 'Длина комментария не более 140 символов');
 
-// показ сообщения об успешной отправке формы
-const closeUploadSuccessMessageByEsc = (evt) => {
-  evt.preventDefault();
-  successMessage.remove();
-  clearFormData();
-}
-
-const showPostSucsessMessage = () => {
-  document.body.appendChild(successMessage);
-  document.addEventListener('keydown', closeUploadSuccessMessageByEsc);
-}
-
-successButton.addEventListener('click', () => {
-  successMessage.remove();
-  clearFormData();
-})
-
-// показ сообщения об ошибке при отправке формы
-const closeUploadErrorMessageByEsc = (evt) => {
-  evt.preventDefault();
-  errorMessage.remove();
-}
-
-const showPostErrorMessage = () => {
-  document.body.appendChild(errorMessage);
-  document.addEventListener('keydown', closeUploadErrorMessageByEsc);
-}
-
-errorButton.addEventListener('click', () => {
-  errorMessage.remove();
-})
-
 // отправка формы на сервер, если все данные введены корректно:
 const setUploadFormSubmit = (onSuccess) => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     if (pristine.validate()) {
-      const formData = new FormData(evt.target);
-
-      fetch(
-        'https://32.javascript.htmlacademy.pro/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      ).then((response) => {
-        if (response.ok) {
-          onSuccess();
+      submitButton.disabled = true;
+      sendData(
+        () => {
+          onSuccess(),
+          submitButton.disabled = false;
           showPostSucsessMessage();
-        } else {
+        },
+        () => {
+          submitButton.disabled = false;
           showPostErrorMessage();
-        }
-      })
-        .catch(() => {
-          showPostErrorMessage();
-        });
-    }
+        },
+        new FormData(evt.target),
+      );
+    };
   });
 };
 
