@@ -1,14 +1,11 @@
-import { getPhotosDataArray } from './data.js';
 import { renderFullsizePhoto, openPhotoModal } from './fullsize.js';
 
-const pictures = getPhotosDataArray();
-
 // функция, отображающая фотографии других пользователей
-const renderThumbnails = () => {
+const renderThumbnails = (picturesData) => {
   const thumbnailsCollection = document.querySelector('.pictures');
   const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-  pictures.forEach((picture) => {
+  picturesData.forEach((picture) => {
     const {url, description, likes, comments} = picture;
     const thumbnailElement = thumbnailTemplate.cloneNode(true);
 
@@ -28,4 +25,4 @@ const renderThumbnails = () => {
   });
 };
 
-export { renderThumbnails, pictures };
+export { renderThumbnails };

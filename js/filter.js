@@ -1,37 +1,37 @@
 // реализовано наложение эффекта на изображение, слайдер:
 const effectsSettings = {
-  NONE: {
+  none: {
     effect: 'none',
   },
-  CHROME: {
+  chrome: {
     effect: 'grayscale',
     min: 0,
     max: 1,
     step: 0.1,
     type: '',
   },
-  SEPIA: {
+  sepia: {
     effect: 'sepia',
     min: 0,
     max: 1,
     step: 0.1,
     type: '',
   },
-  MARVIN: {
+  marvin: {
     effect: 'invert',
     min: 0,
     max: 100,
     step: 1,
     type: '%',
   },
-  PHOBOS: {
+  phobos: {
     effect: 'blur',
     min: 0,
     max: 3,
     step: 0.1,
     type: 'px',
   },
-  HEAT: {
+  heat: {
     effect: 'brightness',
     min: 0,
     max: 3,
@@ -93,11 +93,11 @@ effectLevelSlider.noUiSlider.on('update', () => {
 // изменяем параметры слайдера при клике на каждый фильтр
 effectItemInputs.forEach((item) => {
   item.addEventListener('click', (evt) => {
-    const chosenFilterName = evt.target.value.toUpperCase();
+    const chosenFilterName = evt.target.value;
     photoPreview.dataset.filter = chosenFilterName;
     const chosenEffectSettings = effectsSettings[chosenFilterName];
 
-    if (chosenFilterName === 'NONE') {
+    if (chosenFilterName === 'none') {
       imgPreviewStartSettings();
     } else {
       imgEffectLevel.classList.remove('hidden');
@@ -112,3 +112,5 @@ effectItemInputs.forEach((item) => {
     }
   });
 });
+
+export { imgPreviewStartSettings };

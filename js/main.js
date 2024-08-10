@@ -1,8 +1,7 @@
-import { getPhotosDataArray } from './data.js';
 import { renderThumbnails } from './thumbnails.js';
 import './fullsize.js';
 import './upload-form.js';
-import './filter.js';
+import { getData } from './api.js';
+import { showGetDataError } from './messages';
 
-getPhotosDataArray();
-renderThumbnails();
+getData(renderThumbnails, showGetDataError);

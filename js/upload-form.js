@@ -1,8 +1,17 @@
 import { isEscapeKey } from './util.js';
+import { imgPreviewStartSettings } from './filter.js';
+import { sendData } from './api.js';
+import { showPostErrorMessage, showPostSucsessMessage } from './messages.js';
 
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COMMENTS_LENGTH = 140;
 const MAX_HASHTAGS_COUNT = 5;
+
+const scaleSettings = {
+  STEP: 25,
+  MAX: 100,
+  MIN: 25,
+};
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -10,6 +19,12 @@ const uploadInput = document.querySelector('.img-upload__input');
 const closeUploadModalButton = document.querySelector('.img-upload__cancel');
 const hashtagField = document.querySelector('.text__hashtags');
 const textCommentField = document.querySelector('.text__description');
+const noneFilterItem = document.querySelector('#effect-none');
+const plusScaleButton = document.querySelector('.scale__control--bigger');
+const minusScaleButton = document.querySelector('.scale__control--smaller');
+const scale = document.querySelector('.scale__control--value');
+const photoPreview = document.querySelector('.img-upload__preview');
+const submitButton = document.querySelector('.img-upload__submit');
 
 const isFieldFocused = () => document.activeElement === textCommentField || document.activeElement === hashtagField;
 
@@ -20,11 +35,22 @@ const openUploadModal = () => {
   document.addEventListener('keydown', onDocumentEscKeyDown);
 };
 
+// очистка данных формы после отправки на сервер:
+const clearFormData = () => {
+  uploadInput.value = '';
+  hashtagField.value = '';
+  textCommentField.value = '';
+  noneFilterItem.checked = true;
+  imgPreviewStartSettings();
+  scale.value = `${100}%`;
+  photoPreview.style.transform = `scale(${scale.value})`;
+};
+
 const closeUploadModal = () => {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
-  uploadInput.value = '';
+  clearFormData();
 
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 };
@@ -97,38 +123,46 @@ pristine.addValidator(hashtagField, checkHashtagsRepeat, 'Выявлены по�
 pristine.addValidator(hashtagField, checkHashtagsRegister, 'Введены недопустимые символы');
 pristine.addValidator(textCommentField, checkCommentLength, 'Длина комментария не более 140 символов');
 
-// отправка формы, если все данные введены корректно:
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    evt.target.submit();
-  }
-});
+// отправка формы на сервер, если все данные введены корректно:
+const setUploadFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    if (pristine.validate()) {
+      submitButton.disabled = true;
+      sendData(
+        () => {
+          onSuccess();
+          submitButton.disabled = false;
+          showPostSucsessMessage();
+        },
+        () => {
+          submitButton.disabled = false;
+          showPostErrorMessage();
+        },
+        new FormData(evt.target),
+      );
+    }
+  });
+};
+
+setUploadFormSubmit(closeUploadModal);
 
 // реализовано изменение размера изображения при нажатии на кнопки + и -
-const plusScaleButton = document.querySelector('.scale__control--bigger');
-const minusScaleButton = document.querySelector('.scale__control--smaller');
-const scale = document.querySelector('.scale__control--value');
-const photoPreview = document.querySelector('.img-upload__preview');
-
-const SCALE_STEP = 25;
-const MAX_SCALE = 100;
-const MIN_SCALE = 25;
-
 plusScaleButton.addEventListener('click', () => {
-  const currentScaleValue = Number(scale.value);
+  const currentScaleValue = parseInt(scale.value, 10);
 
-  if (currentScaleValue < MAX_SCALE) {
-    scale.value = `${currentScaleValue + SCALE_STEP }%`;
-    photoPreview.style.transform = `scale(${ scale.value })`;
+  if (currentScaleValue < scaleSettings.MAX) {
+    scale.value = `${currentScaleValue + scaleSettings.STEP}%`;
+    photoPreview.style.transform = `scale(${scale.value})`;
   }
 });
 
 minusScaleButton.addEventListener('click', () => {
-  const currentScaleValue = Number(scale.value);
+  const currentScaleValue = parseInt(scale.value, 10);
 
-  if (currentScaleValue > MIN_SCALE) {
-    scale.value = `${currentScaleValue - SCALE_STEP }%`;
-    photoPreview.style.transform = `scale(${ scale.value })`;
+  if (currentScaleValue > scaleSettings.MIN) {
+    scale.value = `${currentScaleValue - scaleSettings.STEP}%`;
+    photoPreview.style.transform = `scale(${scale.value})`;
   }
 });
