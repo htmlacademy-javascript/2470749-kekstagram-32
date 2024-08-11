@@ -39,4 +39,15 @@ const createGenerator = () => {
 // функция, которая возвращает true / false в зависимости от наличия или отсутствия нажатия клавиши esc
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getRandomInteger, getRandomIntegerArray, getRandomArrayElement, createGenerator, isEscapeKey };
+//
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export { getRandomInteger, getRandomIntegerArray, getRandomArrayElement, createGenerator, isEscapeKey, debounce };
+

@@ -1,10 +1,13 @@
 import { renderFullsizePhoto, openPhotoModal } from './fullsize.js';
-import { getRandomIntegerArray } from './util.js';
+import { getRandomIntegerArray , debounce } from './util.js';
+
+const SHOWN_PHOTOS_MAX_COUNT = 10;
 
 const imagesFilter = document.querySelector('.img-filters');
 const defaultFilterButton = document.querySelector('#filter-default');
 const randomFilterButton = document.querySelector('#filter-random');
 const discussedFilterButton = document.querySelector('#filter-discussed');
+const changeFilterButtons = document.querySelectorAll('.img-filters__button');
 
 // 5.3. При переключении фильтров, отрисовка изображений, подходящих под новый фильтр, должна производиться не чаще, чем один раз 500 мс (устранение дребезга).
 
@@ -63,24 +66,35 @@ const renderThumbnails = (picturesData) => {
   });
 };
 
+const changeButtonState = (evt) => {
+  changeFilterButtons.forEach((button) => button.classList.remove('img-filters__button--active'));
+  evt.target.classList.add('img-filters__button--active');
+};
+
+// функция для отрисовки рандомных 10 фотографий
 const showRandomPhotos = (picturesData) => {
-  randomFilterButton.addEventListener('click', () => {
-    const randomPhotosArray = getRandomPhotosArray(picturesData, 10);
-    renderThumbnails(randomPhotosArray);
+  randomFilterButton.addEventListener('click', (evt) => {
+    const randomPhotosArray = getRandomPhotosArray(picturesData, SHOWN_PHOTOS_MAX_COUNT);
+    debounce(renderThumbnails(randomPhotosArray), 500);
+    changeButtonState(evt);
   });
 };
 
+// функция для отрисовки обсуждаемых фотографий (сортировка по убыванию количества комментариев к фото)
 const showDiscussedPhotos = (picturesData) => {
-  discussedFilterButton.addEventListener('click', () => {
+  discussedFilterButton.addEventListener('click', (evt) => {
     const sortedPhotosArray = getSortedPhotosArray(picturesData);
-    renderThumbnails(sortedPhotosArray);
+    debounce(renderThumbnails(sortedPhotosArray), 500);
+    changeButtonState(evt);
   });
 };
 
+// функция для отрисовки исходного массива фотографий
 const showDefaultPhotos = (picturesData) => {
-  defaultFilterButton.addEventListener('click', () => {
-    renderThumbnails(picturesData);
+  defaultFilterButton.addEventListener('click', (evt) => {
+    debounce(renderThumbnails(picturesData), 500);
+    changeButtonState(evt);
   });
 };
 
-export { renderThumbnails, showImagesSortingSection, showRandomPhotos, showDefaultPhotos, showDiscussedPhotos };
+export { renderThumbnails, showImagesSortingSection, showRandomPhotos, showDefaultPhotos, showDiscussedPhotos, getRandomPhotosArray, getSortedPhotosArray };
