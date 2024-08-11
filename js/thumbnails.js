@@ -97,4 +97,4 @@ const showDefaultPhotos = (picturesData) => {
   });
 };
 
-export { renderThumbnails, showImagesSortingSection, showRandomPhotos, showDefaultPhotos, showDiscussedPhotos, getRandomPhotosArray, getSortedPhotosArray };
+export { renderThumbnails, showImagesSortingSection, showRandomPhotos, showDefaultPhotos, showDiscussedPhotos };
