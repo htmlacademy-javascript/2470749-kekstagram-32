@@ -4,14 +4,26 @@ import './upload-form.js';
 import { getData } from './api.js';
 import { showGetDataError } from './messages';
 
-getData()
-  .then((picturesData) => {
-    renderThumbnails(picturesData),
-      showImagesSortingSection(),
-      showDefaultPhotos(picturesData),
-      showRandomPhotos(picturesData),
-      showDiscussedPhotos(picturesData);
-  })
-  .catch(() => {
-    showGetDataError();
-  });
+try {
+  const picturesData = await getData();
+  renderThumbnails(picturesData);
+  showImagesSortingSection();
+  showDefaultPhotos(picturesData),
+  showRandomPhotos(picturesData),
+  showDiscussedPhotos(picturesData);
+} catch {
+  showGetDataError();
+}
+
+
+// getData()
+//   .then((picturesData) => {
+//     renderThumbnails(picturesData),
+//     showImagesSortingSection(),
+//     showDefaultPhotos(picturesData),
+//     showRandomPhotos(picturesData),
+//     showDiscussedPhotos(picturesData);
+//   })
+//   .catch(() => {
+//     showGetDataError();
+//   });
