@@ -27,6 +27,7 @@ const scale = document.querySelector('.scale__control--value');
 const photoPreview = document.querySelector('.img-upload__preview');
 const submitButton = document.querySelector('.img-upload__submit');
 const photoPreviewImg = document.querySelector('.img-upload__preview img');
+const effectsPreviewIcons = document.querySelectorAll('.effects__preview');
 
 const isFieldFocused = () => document.activeElement === textCommentField || document.activeElement === hashtagField;
 
@@ -72,7 +73,13 @@ const setLoadedPhotoPreview = () => {
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
-    photoPreviewImg.src = URL.createObjectURL(file);
+    const filePath = URL.createObjectURL(file);
+
+    photoPreviewImg.src = filePath;
+
+    effectsPreviewIcons.forEach((icon) => {
+      icon.style.backgroundImage = `url(${ filePath })`;
+    });
   }
 };
 
