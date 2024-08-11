@@ -1,15 +1,14 @@
 import { renderFullsizePhoto, openPhotoModal } from './fullsize.js';
-import { getRandomIntegerArray , debounce } from './util.js';
+import { getRandomIntegerArray, debounce } from './util.js';
 
 const SHOWN_PHOTOS_MAX_COUNT = 10;
+const DEBOUNCE_TIME = 500;
 
 const imagesFilter = document.querySelector('.img-filters');
 const defaultFilterButton = document.querySelector('#filter-default');
 const randomFilterButton = document.querySelector('#filter-random');
 const discussedFilterButton = document.querySelector('#filter-discussed');
 const changeFilterButtons = document.querySelectorAll('.img-filters__button');
-
-// 5.3. При переключении фильтров, отрисовка изображений, подходящих под новый фильтр, должна производиться не чаще, чем один раз 500 мс (устранение дребезга).
 
 // функция для получения массива рандомных 10 фотографий из исходного массива
 const getRandomPhotosArray = (picturesData, photosCount) => {
@@ -22,7 +21,7 @@ const getRandomPhotosArray = (picturesData, photosCount) => {
     randomPhotosArray.push(newElement);
   }
   return randomPhotosArray;
-}
+};
 
 // функция для сравнения элементов с помощью метода sort
 const comparePhotos = (photoDataA, photoDataB) => photoDataB.comments.length - photoDataA.comments.length;
@@ -32,7 +31,7 @@ const getSortedPhotosArray = (picturesData) => {
   const picturesDataCopy = picturesData.slice();
   const sortedPhotosArray = picturesDataCopy.sort(comparePhotos);
   return sortedPhotosArray;
-}
+};
 
 // функция для показа фильтра фотографий
 const showImagesSortingSection = () => {
@@ -71,11 +70,13 @@ const changeButtonState = (evt) => {
   evt.target.classList.add('img-filters__button--active');
 };
 
+const renderFilteredThumbnails = debounce(renderThumbnails, DEBOUNCE_TIME);
+
 // функция для отрисовки рандомных 10 фотографий
 const showRandomPhotos = (picturesData) => {
   randomFilterButton.addEventListener('click', (evt) => {
     const randomPhotosArray = getRandomPhotosArray(picturesData, SHOWN_PHOTOS_MAX_COUNT);
-    debounce(renderThumbnails(randomPhotosArray), 500);
+    renderFilteredThumbnails(randomPhotosArray);
     changeButtonState(evt);
   });
 };
@@ -84,7 +85,7 @@ const showRandomPhotos = (picturesData) => {
 const showDiscussedPhotos = (picturesData) => {
   discussedFilterButton.addEventListener('click', (evt) => {
     const sortedPhotosArray = getSortedPhotosArray(picturesData);
-    debounce(renderThumbnails(sortedPhotosArray), 500);
+    renderFilteredThumbnails(sortedPhotosArray);
     changeButtonState(evt);
   });
 };
@@ -92,7 +93,7 @@ const showDiscussedPhotos = (picturesData) => {
 // функция для отрисовки исходного массива фотографий
 const showDefaultPhotos = (picturesData) => {
   defaultFilterButton.addEventListener('click', (evt) => {
-    debounce(renderThumbnails(picturesData), 500);
+    renderFilteredThumbnails(picturesData);
     changeButtonState(evt);
   });
 };

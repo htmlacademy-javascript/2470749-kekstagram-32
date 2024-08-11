@@ -5,7 +5,7 @@ const route = {
 };
 
 const getData = () => fetch(BASE_URL + route.GET_DATA)
-    .then((response) => response.json());
+  .then((response) => response.json());
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
