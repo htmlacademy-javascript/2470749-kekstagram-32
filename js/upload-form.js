@@ -74,7 +74,7 @@ const setLoadedPhotoPreview = () => {
   if (matches) {
     photoPreviewImg.src = URL.createObjectURL(file);
   }
-}
+};
 
 // открытие окна загрузки фото, загрузка фото:
 uploadInput.addEventListener('change', () => {
