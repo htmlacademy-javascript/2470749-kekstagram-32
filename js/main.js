@@ -8,13 +8,12 @@ try {
   const picturesData = await getData();
   renderThumbnails(picturesData);
   showImagesSortingSection();
-  showDefaultPhotos(picturesData),
-  showRandomPhotos(picturesData),
+  showDefaultPhotos(picturesData);
+  showRandomPhotos(picturesData);
   showDiscussedPhotos(picturesData);
 } catch {
   showGetDataError();
 }
-
 
 // getData()
 //   .then((picturesData) => {
