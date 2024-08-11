@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { imgPreviewStartSettings } from './filter.js';
+import { imgPreviewStartSettings } from './photo-effect.js';
 import { sendData } from './api.js';
 import { showPostErrorMessage, showPostSucsessMessage } from './messages.js';
 

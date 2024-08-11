@@ -75,11 +75,11 @@ const createSlider = () => {
 createSlider();
 
 // функция добавляет элементу img фильтр в стили css
-const addFilter = (intenseValue) => {
-  const chosenFilterName = photoPreview.dataset.filter;
-  if (typeof chosenFilterName !== 'undefined') {
-    const effectName = effectsSettings[chosenFilterName].effect;
-    const effectType = effectsSettings[chosenFilterName].type;
+const addEffect = (intenseValue) => {
+  const chosenEffectName = photoPreview.dataset.filter;
+  if (typeof chosenEffectName !== 'undefined') {
+    const effectName = effectsSettings[chosenEffectName].effect;
+    const effectType = effectsSettings[chosenEffectName].type;
     photoPreview.style.filter = `${effectName }(${ intenseValue }${effectType })`;
   }
 };
@@ -87,17 +87,17 @@ const addFilter = (intenseValue) => {
 // получаем значения слайдера и при изменении положения ползунка передаем значение в value элемента
 effectLevelSlider.noUiSlider.on('update', () => {
   effectLevel.value = effectLevelSlider.noUiSlider.get();
-  addFilter(effectLevel.value);
+  addEffect(effectLevel.value);
 });
 
 // изменяем параметры слайдера при клике на каждый фильтр
 effectItemInputs.forEach((item) => {
   item.addEventListener('click', (evt) => {
-    const chosenFilterName = evt.target.value;
-    photoPreview.dataset.filter = chosenFilterName;
-    const chosenEffectSettings = effectsSettings[chosenFilterName];
+    const chosenEffectName = evt.target.value;
+    photoPreview.dataset.filter = chosenEffectName;
+    const chosenEffectSettings = effectsSettings[chosenEffectName];
 
-    if (chosenFilterName === 'none') {
+    if (chosenEffectName === 'none') {
       imgPreviewStartSettings();
     } else {
       imgEffectLevel.classList.remove('hidden');
