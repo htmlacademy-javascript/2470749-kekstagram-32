@@ -6,6 +6,7 @@ import { showPostErrorMessage, showPostSucsessMessage } from './messages.js';
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COMMENTS_LENGTH = 140;
 const MAX_HASHTAGS_COUNT = 5;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const scaleSettings = {
   STEP: 25,
@@ -25,6 +26,7 @@ const minusScaleButton = document.querySelector('.scale__control--smaller');
 const scale = document.querySelector('.scale__control--value');
 const photoPreview = document.querySelector('.img-upload__preview');
 const submitButton = document.querySelector('.img-upload__submit');
+const photoPreviewImg = document.querySelector('.img-upload__preview img');
 
 const isFieldFocused = () => document.activeElement === textCommentField || document.activeElement === hashtagField;
 
@@ -62,8 +64,23 @@ function onDocumentEscKeyDown(evt) {
   }
 }
 
-// открытие окна загрузки фото
-uploadInput.addEventListener('change', openUploadModal);
+// функция для показа загруженной фотографии в модальном окне
+const setLoadedPhotoPreview = () => {
+  const file = uploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    photoPreviewImg.src = URL.createObjectURL(file);
+  }
+}
+
+// открытие окна загрузки фото, загрузка фото:
+uploadInput.addEventListener('change', () => {
+  openUploadModal();
+  setLoadedPhotoPreview();
+});
 
 // закрытие окна загрузки фото
 closeUploadModalButton.addEventListener('click', (evt) => {
