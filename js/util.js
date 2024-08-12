@@ -39,7 +39,7 @@ const createGenerator = () => {
 // функция, которая возвращает true / false в зависимости от наличия или отсутствия нажатия клавиши esc
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-//
+// функция для вызова коллбэка через определенное время
 const debounce = (callback, timeoutDelay) => {
   let timeoutId;
 
