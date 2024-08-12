@@ -7,7 +7,7 @@ const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COMMENTS_LENGTH = 140;
 const MAX_HASHTAGS_COUNT = 5;
 
-const scaleSettings = {
+const ScaleSettings = {
   STEP: 25,
   MAX: 100,
   MIN: 25,
@@ -152,8 +152,8 @@ setUploadFormSubmit(closeUploadModal);
 plusScaleButton.addEventListener('click', () => {
   const currentScaleValue = parseInt(scale.value, 10);
 
-  if (currentScaleValue < scaleSettings.MAX) {
-    scale.value = `${currentScaleValue + scaleSettings.STEP}%`;
+  if (currentScaleValue < ScaleSettings.MAX) {
+    scale.value = `${currentScaleValue + ScaleSettings.STEP}%`;
     photoPreview.style.transform = `scale(${scale.value})`;
   }
 });
@@ -161,8 +161,8 @@ plusScaleButton.addEventListener('click', () => {
 minusScaleButton.addEventListener('click', () => {
   const currentScaleValue = parseInt(scale.value, 10);
 
-  if (currentScaleValue > scaleSettings.MIN) {
-    scale.value = `${currentScaleValue - scaleSettings.STEP}%`;
+  if (currentScaleValue > ScaleSettings.MIN) {
+    scale.value = `${currentScaleValue - ScaleSettings.STEP}%`;
     photoPreview.style.transform = `scale(${scale.value})`;
   }
 });

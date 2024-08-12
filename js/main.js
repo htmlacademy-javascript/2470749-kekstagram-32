@@ -14,15 +14,3 @@ try {
 } catch {
   showGetDataError();
 }
-
-// getData()
-//   .then((picturesData) => {
-//     renderThumbnails(picturesData),
-//     showImagesSortingSection(),
-//     showDefaultPhotos(picturesData),
-//     showRandomPhotos(picturesData),
-//     showDiscussedPhotos(picturesData);
-//   })
-//   .catch(() => {
-//     showGetDataError();
-//   });
