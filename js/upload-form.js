@@ -55,6 +55,8 @@ const closeUploadModal = () => {
 
   clearFormData();
 
+  pristine.reset();
+
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 };
 
@@ -119,13 +121,7 @@ const checkHashtagsRepeat = (value) => {
     return modifiedHashtag;
   });
 
-  for (let i = 0; i < modifiedHashtagArray.length; i++) {
-    if (modifiedHashtagArray.length === 1) {
-      return true;
-    } else {
-      return modifiedHashtagArray.every((element) => element !== modifiedHashtagArray[i]);
-    }
-  }
+return modifiedHashtagArray.length === new Set(modifiedHashtagArray).size;
 };
 
 // проверка корректности введения символов хэштега:
@@ -178,7 +174,7 @@ plusScaleButton.addEventListener('click', () => {
 
   if (currentScaleValue < ScaleSettings.MAX) {
     scale.value = `${currentScaleValue + ScaleSettings.STEP}%`;
-    photoPreview.style.transform = `scale(${scale.value})`;
+    photoPreviewImg.style.transform = `scale(${scale.value})`;
   }
 });
 
@@ -187,6 +183,8 @@ minusScaleButton.addEventListener('click', () => {
 
   if (currentScaleValue > ScaleSettings.MIN) {
     scale.value = `${currentScaleValue - ScaleSettings.STEP}%`;
-    photoPreview.style.transform = `scale(${scale.value})`;
+    photoPreviewImg.style.transform = `scale(${scale.value})`;
   }
 });
+
+export {onDocumentEscKeyDown};

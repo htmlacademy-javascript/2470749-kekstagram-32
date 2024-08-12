@@ -44,12 +44,12 @@ const effectLevelSlider = document.querySelector('.effect-level__slider');
 const effectLevel = document.querySelector('.effect-level__value');
 const imgEffectLevel = document.querySelector('.img-upload__effect-level');
 const effectItemInputs = document.querySelectorAll('.effects__radio');
-const photoPreview = document.querySelector('.img-upload__preview');
+const photoPreviewImg = document.querySelector('.img-upload__preview img');
 
 // функция для базовых настроек, необходимых для дальнейшего отображения слайдера и превью фото
 const imgPreviewStartSettings = () => {
   effectLevel.value = '0';
-  photoPreview.style.filter = 'none';
+  photoPreviewImg.style.filter = 'none';
   imgEffectLevel.classList.add('hidden');
 };
 
@@ -76,11 +76,11 @@ createSlider();
 
 // функция добавляет элементу img фильтр в стили css
 const addEffect = (intenseValue) => {
-  const chosenEffectName = photoPreview.dataset.filter;
+  const chosenEffectName = photoPreviewImg.dataset.filter;
   if (typeof chosenEffectName !== 'undefined') {
     const effectName = effectsSettings[chosenEffectName].effect;
     const effectType = effectsSettings[chosenEffectName].type;
-    photoPreview.style.filter = `${effectName }(${ intenseValue }${effectType })`;
+    photoPreviewImg.style.filter = `${effectName }(${ intenseValue }${effectType })`;
   }
 };
 
@@ -94,7 +94,7 @@ effectLevelSlider.noUiSlider.on('update', () => {
 effectItemInputs.forEach((item) => {
   item.addEventListener('click', (evt) => {
     const chosenEffectName = evt.target.value;
-    photoPreview.dataset.filter = chosenEffectName;
+    photoPreviewImg.dataset.filter = chosenEffectName;
     const chosenEffectSettings = effectsSettings[chosenEffectName];
 
     if (chosenEffectName === 'none') {

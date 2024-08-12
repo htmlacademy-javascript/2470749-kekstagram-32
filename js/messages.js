@@ -1,3 +1,5 @@
+import { isEscapeKey } from "./util";
+import { onDocumentEscKeyDown } from "./upload-form";
 // вывод и закрытие окон об ошибке или сообщения об успешной отправке формы
 const SHOW_GET_DATA_ERROR_TIME = 5000;
 
@@ -11,20 +13,31 @@ const errorButton = errorMessage.querySelector('.error__button');
 const showGetDataError = () => {
   document.body.appendChild(dataErrorMessage);
 
-  setTimeout(() =>{
+  setTimeout(() => {
     dataErrorMessage.remove();
-  },SHOW_GET_DATA_ERROR_TIME);
+  }, SHOW_GET_DATA_ERROR_TIME);
 };
 
 // показ сообщения об успешной отправке формы
 const closeUploadSuccessMessageByEsc = (evt) => {
-  evt.preventDefault();
-  successMessage.remove();
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    successMessage.remove();
+  }
 };
+
+const closeSuccessMessageByClickOnDocument = (evt) => {
+  if (evt.target === document.querySelector('.success')) {
+    successMessage.remove();
+    document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
+  }
+}
 
 const showPostSucsessMessage = () => {
   document.body.appendChild(successMessage);
   document.addEventListener('keydown', closeUploadSuccessMessageByEsc);
+
+  document.addEventListener('click', closeSuccessMessageByClickOnDocument);
 };
 
 successButton.addEventListener('click', () => {
@@ -34,13 +47,25 @@ successButton.addEventListener('click', () => {
 
 // показ сообщения об ошибке при отправке формы
 const closeUploadErrorMessageByEsc = (evt) => {
-  evt.preventDefault();
-  errorMessage.remove();
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    errorMessage.remove();
+  }
 };
+
+const closeErrorMessageByClickOnDocument = (evt) => {
+  if (evt.target === document.querySelector('.error')) {
+    errorMessage.remove();
+    document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
+  }
+}
 
 const showPostErrorMessage = () => {
   document.body.appendChild(errorMessage);
+  document.removeEventListener('keydown', onDocumentEscKeyDown);
   document.addEventListener('keydown', closeUploadErrorMessageByEsc);
+
+  document.addEventListener('click', closeErrorMessageByClickOnDocument);
 };
 
 errorButton.addEventListener('click', () => {
@@ -48,4 +73,4 @@ errorButton.addEventListener('click', () => {
   document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
 });
 
-export {showGetDataError, showPostSucsessMessage, showPostErrorMessage };
+export { showGetDataError, showPostSucsessMessage, showPostErrorMessage };
