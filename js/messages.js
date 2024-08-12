@@ -29,6 +29,7 @@ const showPostSucsessMessage = () => {
 
 successButton.addEventListener('click', () => {
   successMessage.remove();
+  document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
 });
 
 // показ сообщения об ошибке при отправке формы
@@ -44,6 +45,7 @@ const showPostErrorMessage = () => {
 
 errorButton.addEventListener('click', () => {
   errorMessage.remove();
+  document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
 });
 
 export {showGetDataError, showPostSucsessMessage, showPostErrorMessage };
