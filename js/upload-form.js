@@ -4,11 +4,12 @@ import { sendData } from './api.js';
 import { showPostErrorMessage, showPostSucsessMessage } from './messages.js';
 
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
+const SPACES_REGEXP = / +/g;
 const MAX_COMMENTS_LENGTH = 140;
 const MAX_HASHTAGS_COUNT = 5;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-const scaleSettings = {
+const ScaleSettings = {
   STEP: 25,
   MAX: 100,
   MIN: 25,
@@ -29,6 +30,14 @@ const submitButton = document.querySelector('.img-upload__submit');
 const photoPreviewImg = document.querySelector('.img-upload__preview img');
 const effectsPreviewIcons = document.querySelectorAll('.effects__preview');
 
+// валидация:
+const pristine = new Pristine(uploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'img-upload__field-wrapper--error',
+});
+
 const isFieldFocused = () => document.activeElement === textCommentField || document.activeElement === hashtagField;
 
 const openUploadModal = () => {
@@ -47,14 +56,13 @@ const clearFormData = () => {
   imgPreviewStartSettings();
   scale.value = `${100}%`;
   photoPreview.style.transform = `scale(${scale.value})`;
+  pristine.reset();
 };
 
 const closeUploadModal = () => {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-
   clearFormData();
-
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 };
 
@@ -74,9 +82,7 @@ const setLoadedPhotoPreview = () => {
 
   if (matches) {
     const filePath = URL.createObjectURL(file);
-
     photoPreviewImg.src = filePath;
-
     effectsPreviewIcons.forEach((icon) => {
       icon.style.backgroundImage = `url(${ filePath })`;
     });
@@ -95,42 +101,28 @@ closeUploadModalButton.addEventListener('click', (evt) => {
   closeUploadModal();
 });
 
-// валидация:
-const pristine = new Pristine(uploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
-  errorTextClass: 'img-upload__field-wrapper--error',
-});
-
 // проверка количества хэштегов:
 const checkHashtagsArrayLength = (value) => {
-  const hashtagsArray = value.trim().split(' ');
+  const hashtagsArray = value.replace(SPACES_REGEXP, ' ').trim().split(' ');
 
   return hashtagsArray.length === 0 || hashtagsArray.length <= MAX_HASHTAGS_COUNT;
 };
 
 // проверка повторяющихся хэштегов:
 const checkHashtagsRepeat = (value) => {
-  const hashtagsArray = value.trim().split(' ');
+  const hashtagsArray = value.replace(SPACES_REGEXP, ' ').trim().split(' ');
 
   const modifiedHashtagArray = hashtagsArray.map((hashtag) => {
-    const modifiedHashtag = hashtag.replaceAll(' ', '').toLowerCase();
+    const modifiedHashtag = hashtag.trim().toLowerCase();
     return modifiedHashtag;
   });
 
-  for (let i = 0; i < modifiedHashtagArray.length; i++) {
-    if (modifiedHashtagArray.length === 1) {
-      return true;
-    } else {
-      return modifiedHashtagArray.every((element) => element !== modifiedHashtagArray[i]);
-    }
-  }
+  return modifiedHashtagArray.length === new Set(modifiedHashtagArray).size;
 };
 
 // проверка корректности введения символов хэштега:
 const checkHashtagsRegister = (value) => {
-  const hashtagsArray = value.trim().split(' ');
+  const hashtagsArray = value.replace(SPACES_REGEXP, ' ').trim().split(' ');
 
   if (value === '') {
     return true;
@@ -176,17 +168,19 @@ setUploadFormSubmit(closeUploadModal);
 plusScaleButton.addEventListener('click', () => {
   const currentScaleValue = parseInt(scale.value, 10);
 
-  if (currentScaleValue < scaleSettings.MAX) {
-    scale.value = `${currentScaleValue + scaleSettings.STEP}%`;
-    photoPreview.style.transform = `scale(${scale.value})`;
+  if (currentScaleValue < ScaleSettings.MAX) {
+    scale.value = `${currentScaleValue + ScaleSettings.STEP}%`;
+    photoPreviewImg.style.transform = `scale(${scale.value})`;
   }
 });
 
 minusScaleButton.addEventListener('click', () => {
   const currentScaleValue = parseInt(scale.value, 10);
 
-  if (currentScaleValue > scaleSettings.MIN) {
-    scale.value = `${currentScaleValue - scaleSettings.STEP}%`;
-    photoPreview.style.transform = `scale(${scale.value})`;
+  if (currentScaleValue > ScaleSettings.MIN) {
+    scale.value = `${currentScaleValue - ScaleSettings.STEP}%`;
+    photoPreviewImg.style.transform = `scale(${scale.value})`;
   }
 });
+
+export {onDocumentEscKeyDown};
