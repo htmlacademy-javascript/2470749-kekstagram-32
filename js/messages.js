@@ -31,6 +31,7 @@ function closeSuccessMessageByClickOnDocument(evt) {
   if (evt.target === document.querySelector('.success')) {
     successMessage.remove();
     document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
+    document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
   }
 }
 
@@ -60,15 +61,15 @@ function closeErrorMessageByClickOnDocument(evt) {
   if (evt.target === document.querySelector('.error')) {
     errorMessage.remove();
     document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
+    document.removeEventListener('click', closeErrorMessageByClickOnDocument);
   }
 }
 
 const showPostErrorMessage = () => {
   document.body.appendChild(errorMessage);
-  document.removeEventListener('keydown', onDocumentEscKeyDown);
   document.addEventListener('keydown', closeUploadErrorMessageByEsc);
-
   document.addEventListener('click', closeErrorMessageByClickOnDocument);
+  document.removeEventListener('keydown', onDocumentEscKeyDown);
 };
 
 errorButton.addEventListener('click', () => {
