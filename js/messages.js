@@ -24,6 +24,7 @@ const closeUploadSuccessMessageByEsc = (evt) => {
     evt.preventDefault();
     successMessage.remove();
     document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
+    document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
   }
 };
 
@@ -38,7 +39,6 @@ function closeSuccessMessageByClickOnDocument(evt) {
 const showPostSucsessMessage = () => {
   document.body.appendChild(successMessage);
   document.addEventListener('keydown', closeUploadSuccessMessageByEsc);
-
   document.addEventListener('click', closeSuccessMessageByClickOnDocument);
 };
 
@@ -53,13 +53,16 @@ const closeUploadErrorMessageByEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     errorMessage.remove();
+    document.addEventListener('keydown', onDocumentEscKeyDown);
     document.removeEventListener('click', closeErrorMessageByClickOnDocument);
+    document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
   }
 };
 
 function closeErrorMessageByClickOnDocument(evt) {
   if (evt.target === document.querySelector('.error')) {
     errorMessage.remove();
+    document.addEventListener('keydown', onDocumentEscKeyDown);
     document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
     document.removeEventListener('click', closeErrorMessageByClickOnDocument);
   }
@@ -74,7 +77,8 @@ const showPostErrorMessage = () => {
 
 errorButton.addEventListener('click', () => {
   errorMessage.remove();
-  document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
+  document.addEventListener('keydown', onDocumentEscKeyDown);
+  document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
   document.removeEventListener('click', closeErrorMessageByClickOnDocument);
 });
 
