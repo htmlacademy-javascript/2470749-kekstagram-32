@@ -25,7 +25,6 @@ const noneFilterItem = document.querySelector('#effect-none');
 const plusScaleButton = document.querySelector('.scale__control--bigger');
 const minusScaleButton = document.querySelector('.scale__control--smaller');
 const scale = document.querySelector('.scale__control--value');
-const photoPreview = document.querySelector('.img-upload__preview');
 const submitButton = document.querySelector('.img-upload__submit');
 const photoPreviewImg = document.querySelector('.img-upload__preview img');
 const effectsPreviewIcons = document.querySelectorAll('.effects__preview');
@@ -55,7 +54,7 @@ const clearFormData = () => {
   noneFilterItem.checked = true;
   imgPreviewStartSettings();
   scale.value = `${100}%`;
-  photoPreview.style.transform = `scale(${scale.value})`;
+  photoPreviewImg.style.transform = `scale(${scale.value})`;
   pristine.reset();
 };
 
@@ -137,7 +136,7 @@ const checkCommentLength = (value) => value.length <= MAX_COMMENTS_LENGTH;
 pristine.addValidator(hashtagField, checkHashtagsArrayLength, 'Максимум 5 хэштегов');
 pristine.addValidator(hashtagField, checkHashtagsRepeat, 'Выявлены повторяющиеся хэштеги');
 pristine.addValidator(hashtagField, checkHashtagsRegister, 'Введены недопустимые символы');
-pristine.addValidator(textCommentField, checkCommentLength, 'Длина комментария не более 140 символов');
+pristine.addValidator(textCommentField, checkCommentLength, `Длина комментария не более ${ MAX_COMMENTS_LENGTH } символов`);
 
 // отправка формы на сервер, если все данные введены корректно:
 const setUploadFormSubmit = (onSuccess) => {
