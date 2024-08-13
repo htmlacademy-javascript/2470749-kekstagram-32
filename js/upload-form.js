@@ -4,6 +4,7 @@ import { sendData } from './api.js';
 import { showPostErrorMessage, showPostSucsessMessage } from './messages.js';
 
 const HASHTAGS_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
+const SPACES_REGEXP = / +/g;
 const MAX_COMMENTS_LENGTH = 140;
 const MAX_HASHTAGS_COUNT = 5;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -47,16 +48,13 @@ const clearFormData = () => {
   imgPreviewStartSettings();
   scale.value = `${100}%`;
   photoPreview.style.transform = `scale(${scale.value})`;
+  pristine.reset();
 };
 
 const closeUploadModal = () => {
   uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-
   clearFormData();
-
-  pristine.reset();
-
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 };
 
@@ -76,9 +74,7 @@ const setLoadedPhotoPreview = () => {
 
   if (matches) {
     const filePath = URL.createObjectURL(file);
-
     photoPreviewImg.src = filePath;
-
     effectsPreviewIcons.forEach((icon) => {
       icon.style.backgroundImage = `url(${ filePath })`;
     });
@@ -107,17 +103,17 @@ const pristine = new Pristine(uploadForm, {
 
 // проверка количества хэштегов:
 const checkHashtagsArrayLength = (value) => {
-  const hashtagsArray = value.trim().split(' ');
+  const hashtagsArray = value.replace(SPACES_REGEXP, ' ').trim().split(' ');
 
   return hashtagsArray.length === 0 || hashtagsArray.length <= MAX_HASHTAGS_COUNT;
 };
 
 // проверка повторяющихся хэштегов:
 const checkHashtagsRepeat = (value) => {
-  const hashtagsArray = value.trim().split(' ');
+  const hashtagsArray = value.replace(SPACES_REGEXP, ' ').trim().split(' ');
 
   const modifiedHashtagArray = hashtagsArray.map((hashtag) => {
-    const modifiedHashtag = hashtag.replaceAll(' ', '').toLowerCase();
+    const modifiedHashtag = hashtag.trim().toLowerCase();
     return modifiedHashtag;
   });
 
@@ -126,7 +122,7 @@ return modifiedHashtagArray.length === new Set(modifiedHashtagArray).size;
 
 // проверка корректности введения символов хэштега:
 const checkHashtagsRegister = (value) => {
-  const hashtagsArray = value.trim().split(' ');
+  const hashtagsArray = value.replace(SPACES_REGEXP, ' ').trim().split(' ');
 
   if (value === '') {
     return true;

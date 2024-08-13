@@ -23,6 +23,7 @@ const closeUploadSuccessMessageByEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     successMessage.remove();
+    document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
   }
 };
 
@@ -43,6 +44,7 @@ const showPostSucsessMessage = () => {
 successButton.addEventListener('click', () => {
   successMessage.remove();
   document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
+  document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
 });
 
 // показ сообщения об ошибке при отправке формы
@@ -50,6 +52,7 @@ const closeUploadErrorMessageByEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     errorMessage.remove();
+    document.removeEventListener('click', closeErrorMessageByClickOnDocument);
   }
 };
 
@@ -71,6 +74,7 @@ const showPostErrorMessage = () => {
 errorButton.addEventListener('click', () => {
   errorMessage.remove();
   document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
+  document.removeEventListener('click', closeErrorMessageByClickOnDocument);
 });
 
 export { showGetDataError, showPostSucsessMessage, showPostErrorMessage };

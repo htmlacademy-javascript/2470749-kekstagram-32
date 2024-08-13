@@ -23,19 +23,6 @@ const getRandomIntegerArray = (min, max) => {
   return randomIntegerArray;
 };
 
-// функция, которая выбирает случайный элемент из массива
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-// функция генерирует ID с учетом других ID чтобы они не повторялись (замыкание)
-const createGenerator = () => {
-  let numberId = 1;
-
-  return () => {
-    numberId += 1;
-    return numberId;
-  };
-};
-
 // функция, которая возвращает true / false в зависимости от наличия или отсутствия нажатия клавиши esc
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -49,5 +36,4 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export { getRandomInteger, getRandomIntegerArray, getRandomArrayElement, createGenerator, isEscapeKey, debounce };
-
+export { getRandomInteger, getRandomIntegerArray, isEscapeKey, debounce };
