@@ -4,7 +4,7 @@ import { getRandomIntegerArray, debounce } from './util.js';
 const SHOWN_PHOTOS_MAX_COUNT = 10;
 const DEBOUNCE_TIME = 500;
 
-const imagesFilter = document.querySelector('.img-filters');
+const photoFilter = document.querySelector('.img-filters');
 const defaultFilterButton = document.querySelector('#filter-default');
 const randomFilterButton = document.querySelector('#filter-random');
 const discussedFilterButton = document.querySelector('#filter-discussed');
@@ -34,8 +34,8 @@ const getSortedPhotosArray = (picturesData) => {
 };
 
 // функция для показа фильтра фотографий
-const showImagesSortingSection = () => {
-  imagesFilter.classList.remove('img-filters--inactive');
+const showPhotosSortingSection = () => {
+  photoFilter.classList.remove('img-filters--inactive');
 };
 
 // функция, отображающая фотографии других пользователей
@@ -98,4 +98,4 @@ const showDefaultPhotos = (picturesData) => {
   });
 };
 
-export { renderThumbnails, showImagesSortingSection, showRandomPhotos, showDefaultPhotos, showDiscussedPhotos };
+export { renderThumbnails, showPhotosSortingSection, showRandomPhotos, showDefaultPhotos, showDiscussedPhotos };

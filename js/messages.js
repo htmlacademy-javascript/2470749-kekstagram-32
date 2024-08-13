@@ -1,5 +1,5 @@
-import { isEscapeKey } from "./util";
-import { onDocumentEscKeyDown } from "./upload-form";
+import { isEscapeKey } from './util';
+import { onDocumentEscKeyDown } from './upload-form';
 // вывод и закрытие окон об ошибке или сообщения об успешной отправке формы
 const SHOW_GET_DATA_ERROR_TIME = 5000;
 
@@ -27,7 +27,7 @@ const closeUploadSuccessMessageByEsc = (evt) => {
   }
 };
 
-const closeSuccessMessageByClickOnDocument = (evt) => {
+function closeSuccessMessageByClickOnDocument(evt) {
   if (evt.target === document.querySelector('.success')) {
     successMessage.remove();
     document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
@@ -56,7 +56,7 @@ const closeUploadErrorMessageByEsc = (evt) => {
   }
 };
 
-const closeErrorMessageByClickOnDocument = (evt) => {
+function closeErrorMessageByClickOnDocument(evt) {
   if (evt.target === document.querySelector('.error')) {
     errorMessage.remove();
     document.removeEventListener('keydown', closeUploadErrorMessageByEsc);

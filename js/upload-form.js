@@ -30,6 +30,14 @@ const submitButton = document.querySelector('.img-upload__submit');
 const photoPreviewImg = document.querySelector('.img-upload__preview img');
 const effectsPreviewIcons = document.querySelectorAll('.effects__preview');
 
+// валидация:
+const pristine = new Pristine(uploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'img-upload__field-wrapper--error',
+});
+
 const isFieldFocused = () => document.activeElement === textCommentField || document.activeElement === hashtagField;
 
 const openUploadModal = () => {
@@ -93,14 +101,6 @@ closeUploadModalButton.addEventListener('click', (evt) => {
   closeUploadModal();
 });
 
-// валидация:
-const pristine = new Pristine(uploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
-  errorTextClass: 'img-upload__field-wrapper--error',
-});
-
 // проверка количества хэштегов:
 const checkHashtagsArrayLength = (value) => {
   const hashtagsArray = value.replace(SPACES_REGEXP, ' ').trim().split(' ');
@@ -117,7 +117,7 @@ const checkHashtagsRepeat = (value) => {
     return modifiedHashtag;
   });
 
-return modifiedHashtagArray.length === new Set(modifiedHashtagArray).size;
+  return modifiedHashtagArray.length === new Set(modifiedHashtagArray).size;
 };
 
 // проверка корректности введения символов хэштега:
