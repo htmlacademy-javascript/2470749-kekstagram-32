@@ -19,67 +19,65 @@ const showGetDataError = () => {
 };
 
 // показ сообщения об успешной отправке формы
-const closeUploadSuccessMessageByEsc = (evt) => {
+const closeSuccessMessageByEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    successMessage.remove();
-    document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
-    document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
+    removeSuccessMessage();
   }
 };
 
-function closeSuccessMessageByClickOnDocument(evt) {
+const closeSuccessMessageByClickOnDocument = (evt) => {
   if (evt.target === document.querySelector('.success')) {
-    successMessage.remove();
-    document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
-    document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
+    removeSuccessMessage();
   }
+};
+
+function removeSuccessMessage() {
+  successMessage.remove();
+  document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
+  document.removeEventListener('keydown', closeSuccessMessageByEsc);
 }
 
 const showPostSucsessMessage = () => {
   document.body.appendChild(successMessage);
-  document.addEventListener('keydown', closeUploadSuccessMessageByEsc);
+  document.addEventListener('keydown', closeSuccessMessageByEsc);
   document.addEventListener('click', closeSuccessMessageByClickOnDocument);
 };
 
 successButton.addEventListener('click', () => {
-  successMessage.remove();
-  document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
-  document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
+  removeSuccessMessage();
 });
 
 // показ сообщения об ошибке при отправке формы
-const closeUploadErrorMessageByEsc = (evt) => {
+const closeErrorMessageByEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    errorMessage.remove();
-    document.addEventListener('keydown', onDocumentEscKeyDown);
-    document.removeEventListener('click', closeErrorMessageByClickOnDocument);
-    document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
+    removeErrorMessage();
   }
 };
 
-function closeErrorMessageByClickOnDocument(evt) {
+const closeErrorMessageByClickOnDocument = (evt) => {
   if (evt.target === document.querySelector('.error')) {
-    errorMessage.remove();
-    document.addEventListener('keydown', onDocumentEscKeyDown);
-    document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
-    document.removeEventListener('click', closeErrorMessageByClickOnDocument);
+    removeErrorMessage();
   }
+};
+
+function removeErrorMessage() {
+  errorMessage.remove();
+  document.addEventListener('keydown', onDocumentEscKeyDown);
+  document.removeEventListener('keydown', closeErrorMessageByEsc);
+  document.removeEventListener('click', closeErrorMessageByClickOnDocument);
 }
 
 const showPostErrorMessage = () => {
   document.body.appendChild(errorMessage);
-  document.addEventListener('keydown', closeUploadErrorMessageByEsc);
+  document.addEventListener('keydown', closeErrorMessageByEsc);
   document.addEventListener('click', closeErrorMessageByClickOnDocument);
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 };
 
 errorButton.addEventListener('click', () => {
-  errorMessage.remove();
-  document.addEventListener('keydown', onDocumentEscKeyDown);
-  document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
-  document.removeEventListener('click', closeErrorMessageByClickOnDocument);
+  removeErrorMessage();
 });
 
 export { showGetDataError, showPostSucsessMessage, showPostErrorMessage };
