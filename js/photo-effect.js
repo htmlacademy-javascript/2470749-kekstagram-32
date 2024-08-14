@@ -47,13 +47,13 @@ const effectItemInputs = document.querySelectorAll('.effects__radio');
 const photoPreviewImg = document.querySelector('.img-upload__preview img');
 
 // функция для базовых настроек, необходимых для дальнейшего отображения слайдера и превью фото
-const imgPreviewStartSettings = () => {
+const resetImgPreviewSettings = () => {
   effectLevel.value = '0';
   photoPreviewImg.style.filter = 'none';
   imgEffectLevel.classList.add('hidden');
 };
 
-imgPreviewStartSettings();
+resetImgPreviewSettings();
 
 // функция для создания слайдера
 const createSlider = () => {
@@ -98,7 +98,7 @@ effectItemInputs.forEach((item) => {
     const chosenEffectSettings = effectsSettings[chosenEffectName];
 
     if (chosenEffectName === 'none') {
-      imgPreviewStartSettings();
+      resetImgPreviewSettings();
     } else {
       imgEffectLevel.classList.remove('hidden');
       effectLevelSlider.noUiSlider.updateOptions({
@@ -113,4 +113,4 @@ effectItemInputs.forEach((item) => {
   });
 });
 
-export { imgPreviewStartSettings };
+export { resetImgPreviewSettings };

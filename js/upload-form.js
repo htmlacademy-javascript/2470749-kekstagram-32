@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { imgPreviewStartSettings } from './photo-effect.js';
+import { resetImgPreviewSettings } from './photo-effect.js';
 import { sendData } from './api.js';
 import { showPostErrorMessage, showPostSucsessMessage } from './messages.js';
 
@@ -52,7 +52,7 @@ const clearFormData = () => {
   hashtagField.value = '';
   textCommentField.value = '';
   noneFilterItem.checked = true;
-  imgPreviewStartSettings();
+  resetImgPreviewSettings();
   scale.value = `${100}%`;
   photoPreviewImg.style.transform = `scale(${scale.value})`;
   pristine.reset();
