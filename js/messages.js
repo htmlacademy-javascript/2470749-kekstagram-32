@@ -19,20 +19,22 @@ const showGetDataError = () => {
 };
 
 // показ сообщения об успешной отправке формы
+const removeSuccessMessage = () => {
+  successMessage.remove();
+  document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
+  document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
+}
+
 const closeUploadSuccessMessageByEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    successMessage.remove();
-    document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
-    document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
+    removeSuccessMessage();
   }
 };
 
-function closeSuccessMessageByClickOnDocument(evt) {
+const closeSuccessMessageByClickOnDocument = (evt) => {
   if (evt.target === document.querySelector('.success')) {
-    successMessage.remove();
-    document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
-    document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
+    removeSuccessMessage();
   }
 }
 
@@ -43,28 +45,27 @@ const showPostSucsessMessage = () => {
 };
 
 successButton.addEventListener('click', () => {
-  successMessage.remove();
-  document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
-  document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
+  removeSuccessMessage();
 });
 
 // показ сообщения об ошибке при отправке формы
+const removeErrorMessage = () => {
+  errorMessage.remove();
+  document.addEventListener('keydown', onDocumentEscKeyDown);
+  document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
+  document.removeEventListener('click', closeErrorMessageByClickOnDocument);
+}
+
 const closeUploadErrorMessageByEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    errorMessage.remove();
-    document.addEventListener('keydown', onDocumentEscKeyDown);
-    document.removeEventListener('click', closeErrorMessageByClickOnDocument);
-    document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
+    removeErrorMessage();
   }
 };
 
-function closeErrorMessageByClickOnDocument(evt) {
+const closeErrorMessageByClickOnDocument = (evt) => {
   if (evt.target === document.querySelector('.error')) {
-    errorMessage.remove();
-    document.addEventListener('keydown', onDocumentEscKeyDown);
-    document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
-    document.removeEventListener('click', closeErrorMessageByClickOnDocument);
+   removeErrorMessage();
   }
 }
 
@@ -76,10 +77,7 @@ const showPostErrorMessage = () => {
 };
 
 errorButton.addEventListener('click', () => {
-  errorMessage.remove();
-  document.addEventListener('keydown', onDocumentEscKeyDown);
-  document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
-  document.removeEventListener('click', closeErrorMessageByClickOnDocument);
+  removeErrorMessage();
 });
 
 export { showGetDataError, showPostSucsessMessage, showPostErrorMessage };
