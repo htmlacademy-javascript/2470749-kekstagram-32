@@ -19,13 +19,7 @@ const showGetDataError = () => {
 };
 
 // показ сообщения об успешной отправке формы
-const removeSuccessMessage = () => {
-  successMessage.remove();
-  document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
-  document.removeEventListener('keydown', closeUploadSuccessMessageByEsc);
-}
-
-const closeUploadSuccessMessageByEsc = (evt) => {
+const closeSuccessMessageByEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     removeSuccessMessage();
@@ -36,11 +30,17 @@ const closeSuccessMessageByClickOnDocument = (evt) => {
   if (evt.target === document.querySelector('.success')) {
     removeSuccessMessage();
   }
+};
+
+function removeSuccessMessage() {
+  successMessage.remove();
+  document.removeEventListener('click', closeSuccessMessageByClickOnDocument);
+  document.removeEventListener('keydown', closeSuccessMessageByEsc);
 }
 
 const showPostSucsessMessage = () => {
   document.body.appendChild(successMessage);
-  document.addEventListener('keydown', closeUploadSuccessMessageByEsc);
+  document.addEventListener('keydown', closeSuccessMessageByEsc);
   document.addEventListener('click', closeSuccessMessageByClickOnDocument);
 };
 
@@ -49,14 +49,7 @@ successButton.addEventListener('click', () => {
 });
 
 // показ сообщения об ошибке при отправке формы
-const removeErrorMessage = () => {
-  errorMessage.remove();
-  document.addEventListener('keydown', onDocumentEscKeyDown);
-  document.removeEventListener('keydown', closeUploadErrorMessageByEsc);
-  document.removeEventListener('click', closeErrorMessageByClickOnDocument);
-}
-
-const closeUploadErrorMessageByEsc = (evt) => {
+const closeErrorMessageByEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     removeErrorMessage();
@@ -65,13 +58,20 @@ const closeUploadErrorMessageByEsc = (evt) => {
 
 const closeErrorMessageByClickOnDocument = (evt) => {
   if (evt.target === document.querySelector('.error')) {
-   removeErrorMessage();
+    removeErrorMessage();
   }
+};
+
+function removeErrorMessage() {
+  errorMessage.remove();
+  document.addEventListener('keydown', onDocumentEscKeyDown);
+  document.removeEventListener('keydown', closeErrorMessageByEsc);
+  document.removeEventListener('click', closeErrorMessageByClickOnDocument);
 }
 
 const showPostErrorMessage = () => {
   document.body.appendChild(errorMessage);
-  document.addEventListener('keydown', closeUploadErrorMessageByEsc);
+  document.addEventListener('keydown', closeErrorMessageByEsc);
   document.addEventListener('click', closeErrorMessageByClickOnDocument);
   document.removeEventListener('keydown', onDocumentEscKeyDown);
 };
